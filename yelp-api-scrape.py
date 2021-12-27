@@ -390,13 +390,13 @@ events_data_de_dup_cut.to_csv(f"{directory}/yelp_events_01.csv", index=False, se
 # fileclient = ShareFileClient(account_url=acc_url, credential=credential, share_name="yelp-raw-data",file_path="yelp_data_01.csv")
 
 
-# service = ShareServiceClient(account_url="https://dbdatalakerd.file.core.windows.net/", credential="dXWnMJaRSfVMYVw4uOp3EqWE3OvMkhWOWtadrcAXBKwdGEo78dUuvr6MJXwBVor1QbJSWnfZ/LxiztbkvCrU0Q==")
+# service = ShareServiceClient(account_url="https://dbdatalakerd.file.core.windows.net/", credential="/LxiztbkvCrU0Q==")
 
 # service.account_name
 # b = [a for a in service.list_shares()]
 # b
 
-# share = ShareClient(account_url="https://dbdatalakerd.file.core.windows.net/", credential="dXWnMJaRSfVMYVw4uOp3EqWE3OvMkhWOWtadrcAXBKwdGEo78dUuvr6MJXwBVor1QbJSWnfZ/LxiztbkvCrU0Q==",
+# share = ShareClient(account_url="https://dbdatalakerd.file.core.windows.net/", credential="/LxiztbkvCrU0Q==",
 # share_name="yelp-raw-data" )
 # share.create_share()
 
@@ -411,7 +411,7 @@ events_data_de_dup_cut.to_csv(f"{directory}/yelp_events_01.csv", index=False, se
 # test = pd.json_normalize(data['businesses'], max_level=2)
 # test.to_csv("test_file.csv")
 
-# file_client = ShareFileClient(account_url="https://dbdatalakerd.file.core.windows.net/", credential="dXWnMJaRSfVMYVw4uOp3EqWE3OvMkhWOWtadrcAXBKwdGEo78dUuvr6MJXwBVor1QbJSWnfZ/LxiztbkvCrU0Q==",
+# file_client = ShareFileClient(account_url="https://dbdatalakerd.file.core.windows.net/", credential="/LxiztbkvCrU0Q==",
 # share_name="yelp-raw-data",file_path="yelp-data-02.csv")
 
 # with open("test_file.csv", "rb") as file:
