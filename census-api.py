@@ -90,7 +90,7 @@ from pathlib import Path
 
 try:
     the_day = datetime.datetime.now().strftime('%Y-%m-%d')
-    directory = f"extract_{the_day}"
+    directory = f"local_raw_data/extract_{the_day}"
     path = Path(os.getcwd())
     dir_path = os.path.join(path, directory)
     os.mkdir(dir_path)
