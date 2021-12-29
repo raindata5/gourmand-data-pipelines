@@ -34,7 +34,7 @@ else:
 
 
 the_day = datetime.now().strftime('%Y-%m-%d')
-directory = f"extract_{the_day}"
+directory = f"local_raw_data/extract_{the_day}"
 
 if not os.path.isdir(directory):
     os.makedirs(directory)
@@ -172,7 +172,7 @@ transaction_data_de_dup.to_csv(f"{directory}/yelp_trans_01.csv", index=False, se
 #------------>
 
 
-exit(0)
+
 
 
 #check reviews still functions right
@@ -227,7 +227,7 @@ for bus_id, bus_alias in zip(bus_stack['id'].values, bus_stack['alias'].values) 
         pd_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         pd_data['business_id'] = bus_id
         pd_data['business_alias'] = bus_alias
-        time.sleep(1)
+        # time.sleep(1)
         all_review_data = all_review_data.append(pd_data)
         msg = [bus_id,pd_data.shape[0], 'success']
         review_msg_store.append(msg)
@@ -295,7 +295,7 @@ for county in counties_list[5:15]:
             pd_data['county'] = county
             pd_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             
-            time.sleep(1)
+            # time.sleep(1)
             current_event_cnt = len(data.get('events', [])) # getting the current count of the events in the json response body
 
             all_events_data = all_events_data.append(pd_data)

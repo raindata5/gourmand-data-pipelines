@@ -1,0 +1,9 @@
+# curated_data/
+# local_data_extracts/
+# raw_data/
+# test_data/
+yelp-data-venv/
+yelp-data-venv-windows/
+*.conf
+*.csv
+*.json

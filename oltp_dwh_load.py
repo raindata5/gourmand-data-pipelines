@@ -5,12 +5,13 @@ import datetime
 import os
 import boto3
 import re 
+
 import pyodbc
 
 the_day = datetime.datetime.now().strftime('%Y-%m-%d') 
 raw_directory = f"raw_data/extract_{the_day}"
 curated_directory = f"curated_data/extract_{the_day}"
-
+raw_directory = f"raw_data/extract_2021-12-26"
 if not os.path.isdir(curated_directory):
     os.makedirs(curated_directory)
 
@@ -193,4 +194,5 @@ except Exception as e:
 
 cnxn.close()
 conn.close()
+
 

@@ -40,11 +40,13 @@ password = parser.get("mssqlLocal", "password")
 # connecting to dwh and getting the latest close date for the business holdings
 dwh_conn = pymssql.connect(host=host, database="GourmandDWH")
 dwh_cursor = dwh_conn.cursor()
-dwh_cursor.execute("select COALESCE(MAX(fbh.CloseDate), '1900-00-00') from _Production.FactBusinessHolding fbh")
+# dwh_cursor.execute("select COALESCE(MAX(fbh.CloseDate), '1900-00-00') from _Production.FactBusinessHolding fbh")
+dwh_cursor.execute("select COALESCE(NULL, '2021-11-02')")
 fbh_date_res = dwh_cursor.fetchone()[0]
 
 # getting the latest lasteditedwhen date for the FactCountyGrowth table
-dwh_cursor.execute("select COALESCE(MAX(fcg.LastEditedWhen), '1900-00-00') from _Production.FactCountyGrowth fcg")
+# dwh_cursor.execute("select COALESCE(MAX(fcg.LastEditedWhen), '1900-00-00') from _Production.FactCountyGrowth fcg")
+dwh_cursor.execute("select COALESCE(NULL, '2021-11-02')")
 cg_date_res = dwh_cursor.fetchone()[0]
 #[]
 # connecting to OLTP db
@@ -91,10 +93,10 @@ for table in table_results:
         cnt_results_tbl.append(ix)
         # get all the row data and then just serialized similar to the following (for cnt_results_tbl just do that all in one file at end)
         if table[2] == "BusinessHolding":
-            oltp_cursor.execute(select_rows_query + "WHERE CloseDate >= ?", (fbh_date_res,))
+            oltp_cursor.execute(select_rows_query + "WHERE CloseDate >= CAST(? as DATE)", (fbh_date_res,))
             results = oltp_cursor.fetchall()
         elif table[2] == "CountyGrowth":
-            oltp_cursor.execute(select_rows_query + "WHERE LastEditedWhen > ?", (cg_date_res,))
+            oltp_cursor.execute(select_rows_query + "WHERE LastEditedWhen > CAST(? as DATE)", (cg_date_res,))
             results = oltp_cursor.fetchall()
         else:
             oltp_cursor.execute(select_rows_query)
@@ -125,12 +127,12 @@ for table in table_results:
         row = tuple(row)
         results[row_ix] = row
 
-    with open(f'{directory}/{table[1]}', 'w', newline='') as fp:
+    with open(f'{directory}/{table[1]}', 'w', encoding='UTF-8', newline='') as fp:
         csv_w = csv.writer(fp, delimiter='|', quotechar="'")
         csv_w.writerows(results)
-with open(f'{directory}/tbl_cnt_results.csv', 'w', newline='') as fp:
-    csv_w = csv.writer(fp, delimiter='|', quotechar="'")
-    csv_w.writerows(cnt_results_tbl)
+    with open(f'{directory}/tbl_cnt_results.csv', 'w', encoding='UTF-8', newline='') as fp:
+        csv_w = csv.writer(fp, delimiter='|', quotechar="'")
+        csv_w.writerows(cnt_results_tbl)
 # add a logger for these data extractions
 
 
