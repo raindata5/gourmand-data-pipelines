@@ -106,10 +106,12 @@ for county_ix, county in enumerate(counties_list):
             tran_data = tran_data.rename({0:'transaction'}, axis=1)
 
             pd_data['county'] = county # assigning each batch of data with it's respective counties
-            pd_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S') # setting the time for when the data was extracted with a specific format
-            cat_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            tran_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-
+            # pd_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S') # setting the time for when the data was extracted with a specific format
+            # cat_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            # tran_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            pd_data['time_extracted'] = datetime.now().isoformat()
+            cat_data['time_extracted'] = datetime.now().isoformat()
+            tran_data['time_extracted'] = datetime.now().isoformat()
             # time.sleep(1)
             current_business_cnt = len(data.get('businesses', [])) # getting the current count of businesses in the json response body
             # if current_business_cnt < 50: 
@@ -210,7 +212,8 @@ for bus_id, bus_alias in zip(bus_stack['id'].values, bus_stack['alias'].values) 
                 continue
 
             pd_data = pd.json_normalize(new_data.get('reviews', None), max_level=2)
-            pd_data['time_extracted'] = datetime.now().strftime('%m-%d-%Y %H:%M')
+            # pd_data['time_extracted'] = datetime.now().strftime('%m-%d-%Y %H:%M')
+            pd_data['time_extracted'] = datetime.now().isoformat()
             pd_data['business_id'] = bus_id
             pd_data['business_alias'] = bus_alias
             # can also extract the business alias using regex
@@ -224,7 +227,8 @@ for bus_id, bus_alias in zip(bus_stack['id'].values, bus_stack['alias'].values) 
         if data.get('reviews', None) is None:
             continue # if the business contains no reviews then continue on to the next business
         pd_data = pd.json_normalize(data.get('reviews', None), max_level=2)
-        pd_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        # pd_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        pd_data['time_extracted'] = datetime.now().isoformat()
         pd_data['business_id'] = bus_id
         pd_data['business_alias'] = bus_alias
         # time.sleep(1)
@@ -293,8 +297,8 @@ for county in counties_list[5:15]:
             # normalizing the returned json object and defining the structure of the data that I want to be returned back
             pd_data = pd.json_normalize(data.get('events'), max_level=2)
             pd_data['county'] = county
-            pd_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            
+            # pd_data['time_extracted'] = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            pd_data['time_extracted'] = datetime.now().isoformat()
             # time.sleep(1)
             current_event_cnt = len(data.get('events', [])) # getting the current count of the events in the json response body
 
