@@ -130,9 +130,9 @@ for table in table_results:
     with open(f'{directory}/{table[1]}', 'w', encoding='UTF-8', newline='') as fp:
         csv_w = csv.writer(fp, delimiter='|', quotechar="'")
         csv_w.writerows(results)
-    with open(f'{directory}/tbl_cnt_results.csv', 'w', encoding='UTF-8', newline='') as fp:
-        csv_w = csv.writer(fp, delimiter='|', quotechar="'")
-        csv_w.writerows(cnt_results_tbl)
+with open(f'{directory}/tbl_cnt_results.csv', 'w', encoding='UTF-8', newline='') as fp:
+    csv_w = csv.writer(fp, delimiter='|', quotechar="'")
+    csv_w.writerows(cnt_results_tbl)
 # add a logger for these data extractions
 
 

@@ -30,8 +30,7 @@ else:
     print("incorrect usage")
     exit(-1)
 
-
-
+iterator=2
 
 the_day = datetime.now().strftime('%Y-%m-%d')
 directory = f"local_raw_data/extract_{the_day}"
@@ -273,7 +272,7 @@ offset = 'offset=50'
 all_events_data = pd.DataFrame()
 events_msg_store = []
 # for county in counties_list[:1090]:
-for county in counties_list[5:15]:
+for county in counties_list:
     counter = 0
     for ix in range(iterator): # due to the amount of request each day (5000) this is to iterate over each county and not go over limit
         try:

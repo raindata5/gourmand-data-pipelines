@@ -37,7 +37,7 @@ CREATE CLUSTERED COLUMNSTORE INDEX
 ON [_Production].[DimBusiness]  
 WITH (DROP_EXISTING = ON); 
 
-
+ from _Production.FactCountyGrowth fcg
 
 
 

@@ -815,3 +815,12 @@ FROM sys.tables
 WHERE TYPE = 'U' and schema_id in (9,10)
 ORDER BY name
 
+
+--
+select * from dbo.alembic_version
+
+TRUNCATE table dbo.alembic_version
+
+
+
+select * from _Production.Event
