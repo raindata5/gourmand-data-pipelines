@@ -4,7 +4,7 @@ from pathlib import Path
 from postgres_bq_data_validation import send_slack_notification
 
 webhook_url = 'https://hooks.slack.com/services/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'
-directory = f"dbt-project/gourmand-dbt-dwh-project"
+directory = f"/home/ubuntucontributor/gourmand-dwh"
 path = Path(os.getcwd())
 new_path = path.parent
 dir_path = os.path.join(new_path, directory)
