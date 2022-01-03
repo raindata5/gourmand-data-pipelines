@@ -31,11 +31,11 @@ def db_conn():
     
     parser = configparser.ConfigParser()
     parser.read("/home/ubuntucontributor/gourmand-data-pipelines/pipeline.conf")
-    dbname = parser.get("postgres_dwh", "database")
-    user = parser.get("postgres_dwh", "username")
-    password = parser.get("postgres_dwh", "password")
-    host = parser.get("postgres_dwh", "host")
-    port = parser.get("postgres_dwh", "port")
+    dbname = parser.get("postgres_ubuntu_db", "database")
+    user = parser.get("postgres_ubuntu_db", "username")
+    password = parser.get("postgres_ubuntu_db", "password")
+    host = parser.get("postgres_ubuntu_db", "host")
+    port = parser.get("postgres_ubuntu_db", "port")
 
     ps_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host= host, port=port)
     return ps_conn
@@ -161,6 +161,8 @@ if __name__ == "__main__":
     logs, failure_tbls, status = commit_test(s3_client=s3_client, bucket_name=bucket)
 
     [log_end_result(row[0], row[1], row[2], row[3], ps_conn) for row in logs]
+
+    ps_conn.close()
 
     if status > 0:
         #send the slack notification specify the tables that are bad
