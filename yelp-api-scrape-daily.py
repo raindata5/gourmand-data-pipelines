@@ -83,7 +83,7 @@ for county_ix, county in enumerate(counties_list[:test_var]):
                 bus_data_cut_de_dup.to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'")
             else :
                 bus_data_cut_de_dup.to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'", header=False, mode='a')
-            
+            print(f'{county}')
             msg = [county_ix,county,ix+1, 'completed', response.status_code] # creating message that the county was completed at a specific iteration
             msg_store.append(msg) # appending the message to the message store
             if current_business_cnt < 50 and ix != 1: # if less than 50 businesses were returned on the first iteration then there is no need for a second since 50 is max                
