@@ -12,9 +12,9 @@ the_day = datetime.now().strftime('%Y-%m-%d')
 directory = f"local_raw_data/extract_{the_day}"
 
 
-if sys.argv[1] == 'test':
+if (len(sys.argv) == 2) and (sys.argv[1] == 'test'):
     test_var = 50
-elif not sys.argv[1]:
+else:
     test_var=None
 
 if not os.path.isdir(directory):

@@ -300,6 +300,10 @@ ALTER TABLE "_Production"."Business2"
 -- select cast("is_closed" as boolean) from "_Production"."Business"
 --
 
+ALTER TABLE "_Production".business
+ALTER COLUMN is_closed TYPE boolean
+USING is_closed::boolean;
+
 
 INSERT into "_Production"."Business2"(BusinessID, BusinessName, ChainName, AddressLine1, AddressLine2, AddressLine3, Latitude,
 Longitude, ZipCode, BusinessPhone, BusinessURL, is_closed, DistanceToCounty, CityID, CountyID,
