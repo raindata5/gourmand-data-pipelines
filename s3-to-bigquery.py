@@ -98,6 +98,8 @@ for table in table_results:
     #storing the data describing each ingestion
     full_job = (job, job_result,table.num_rows,len(table.schema), table_id)
     table_logs.append(full_job)
+    #considering reuploading as curated data into s3 but as there are no transformations at the moment perhaps better to not do so
+    # s3_client.upload_file(f'{curated_directory}/{table[1]}', bucket_name, f'{curated_directory}/{table[1]}')
 
 with open(f'{curated_directory}/ingest_logs.csv','w', encoding='utf-8') as fp:
         csv_w = csv.writer(fp, delimiter = '|', quotechar="'")   

@@ -64,7 +64,7 @@ def commit_test(s3_client, bucket_name, db_conn=None):
 
 
     s3_client.download_file(bucket_name,f'{raw_directory}/tbl_cnt_results.csv', f'{curated_directory}/tbl_cnt_results.csv')
-    s3_client.download_file(bucket_name,f'{raw_directory}/ingest_logs.csv', f'{curated_directory}/ingest_logs.csv')
+    s3_client.download_file(bucket_name,f'{curated_directory}/ingest_logs.csv', f'{curated_directory}/ingest_logs.csv')
 
     with open(f'{curated_directory}/ingest_logs.csv') as read_obj:
         csv_reader = csv.reader(read_obj, delimiter='|', quotechar="'")
