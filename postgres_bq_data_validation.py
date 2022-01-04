@@ -140,7 +140,7 @@ def send_slack_notification(status, tbls, webhook_url,pg_tbl_cnt=None, bq_tbl_cn
 #[]
 #
 if __name__ == "__main__":
-    if len(sys.argv) == 2 and (sys.argv[1] == '-h' or '--help'):
+    if (len(sys.argv) == 2) and (sys.argv[1] in ('-h', '--help')):
         print("Usage: python validator.py"
             + "severity_level")
         print("Valid severity values:")
@@ -152,6 +152,7 @@ if __name__ == "__main__":
         print("Usage: python postgres-bq-data-validation.py"
             + "severity_level")
         exit(-1)
+    
     sev = sys.argv[1]
 
     s3_client, bucket = aws_bucket_client()
