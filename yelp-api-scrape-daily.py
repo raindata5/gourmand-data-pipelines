@@ -40,7 +40,7 @@ counties = pd.read_csv(f"{directory}/census_counties_01.csv")
 counties_list = counties.iloc[:,-1].tolist()
 
 
-bus_data = pd.DataFrame()
+# bus_data = pd.DataFrame()
 msg_store = []
 for county_ix, county in enumerate(counties_list[:test_var]):
     counter = 0
@@ -75,9 +75,14 @@ for county_ix, county in enumerate(counties_list[:test_var]):
             current_business_cnt = len(data.get('businesses', [])) # getting the current count of businesses in the json response body
 
             # appending the data to the df created initially
-            bus_data = bus_data.append(pd_data)
-
-
+            # bus_data = bus_data.append(pd_data)
+            bus_data = pd_data
+            bus_data_cut = bus_data.drop(['categories','transactions','location.display_address'], axis=1)
+            bus_data_cut_de_dup = bus_data_cut.drop_duplicates(['id'])
+            if 'yelp_business_01.csv' not in os.listdir(f"{directory}"):
+                bus_data_cut_de_dup.to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'")
+            else :
+                bus_data_cut_de_dup.to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'", header=False, mode='a')
             
             msg = [county_ix,county,ix+1, 'completed', response.status_code] # creating message that the county was completed at a specific iteration
             msg_store.append(msg) # appending the message to the message store
@@ -93,13 +98,13 @@ for county_ix, county in enumerate(counties_list[:test_var]):
             msg = [county_ix,county,ix+1, e, '']
             msg_store.append(msg)
 
-bus_data_cut = bus_data.drop(['categories','transactions','location.display_address'], axis=1)
+# bus_data_cut = bus_data.drop(['categories','transactions','location.display_address'], axis=1)
 
 
 with open(f'{directory}/business_logs_01.csv','w') as fp:
     csv_w = csv.writer(fp, delimiter = '|', quotechar="'", doublequote=True)        
     csv_w.writerows(msg_store)
 
-bus_data_cut_de_dup = bus_data_cut.drop_duplicates(['id'])
+# bus_data_cut_de_dup = bus_data_cut.drop_duplicates(['id'])
 
-bus_data_cut_de_dup.to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'")
+# bus_data_cut_de_dup.to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'")

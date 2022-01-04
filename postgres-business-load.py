@@ -32,6 +32,12 @@ try:
 except Exception as e:
     print(e)
 
-
+try:
+    ps_cursor = ps_conn.cursor()
+    sql_file = open('postgres-removing-duplicates.sql','r')
+    ps_cursor.execute(sql_file.read())
+    ps_conn.commit()
+except Exception as e:
+    print(e)
 
 ps_conn.close()
