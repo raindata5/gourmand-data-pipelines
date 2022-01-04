@@ -103,4 +103,4 @@ with open(f'{curated_directory}/ingest_logs.csv','w', encoding='utf-8') as fp:
         csv_w = csv.writer(fp, delimiter = '|', quotechar="'")   
         csv_w.writerows(table_logs)
 
-s3_client.upload(f'{curated_directory}/ingest_logs.csv', bucket_name, f'{curated_directory}/ingest_logs.csv')
+s3_client.upload_file(f'{curated_directory}/ingest_logs.csv', bucket_name, f'{curated_directory}/ingest_logs.csv')
