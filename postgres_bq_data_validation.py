@@ -61,8 +61,7 @@ def commit_test(s3_client, bucket_name, db_conn=None):
     raw_directory = f"raw_data/extract_{the_day}"
     curated_directory = f"curated_data/extract_{the_day}"
 
-    raw_directory = f"raw_data/extract_2021-12-31"
-    curated_directory = f"curated_data/extract_2021-12-31"
+
 
     s3_client.download_file(bucket_name,f'{raw_directory}/tbl_cnt_results.csv', f'{curated_directory}/tbl_cnt_results.csv')
     s3_client.download_file(bucket_name,f'{raw_directory}/ingest_logs.csv', f'{curated_directory}/ingest_logs.csv')
