@@ -8,9 +8,9 @@ try:
     cursor = ps_conn.cursor()
     sql_file = open('insert-postgres-bh.sql','r')
     cursor.execute(sql_file.read())
-    record = cursor.fetchall()
-    res_1 = record[0]
-    print(res_1)
+    # record = cursor.fetchone()
+    # res_1 = record[0]
+    # print(res_1)
     exit(0)
 except Exception as e:
     print(e)
