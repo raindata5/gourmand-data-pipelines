@@ -42,6 +42,6 @@ reviewcount = cast(cast(br.review_count as numeric(30,0)) as int)
 from bus_relation br
 -- data is only getting updated where it's id is already in the db and the close date
 -- as well
-where (br.businessid = bh.businessid) and (cast(br.time_extracted as date) = bh.closedate);				
--- returning br.alias;
+where (br.businessid = bh.businessid) and (cast(br.time_extracted as date) = bh.closedate)				
+returning br.alias;
 commit transaction;
