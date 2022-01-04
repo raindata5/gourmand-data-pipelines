@@ -9,7 +9,7 @@ path = Path(os.getcwd())
 new_path = path.parent
 dir_path = os.path.join(new_path, directory)
 
-with open(f'{dir_path}/dbt_test_file.txt', 'r') as fh:
+with open(f'{dir_path}/dbt-test-file.txt', 'r') as fh:
     num_list = [line for line in fh]
 
 
