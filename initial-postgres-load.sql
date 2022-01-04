@@ -7,7 +7,7 @@ Alter table public."Business" alter COLUMN "time_extracted" type text;
 
 COPY public."Business" FROM 
 '/home/ubuntucontributor/gourmand-data-pipelines/local_raw_data/extract_2021-12-18/yelp_business_01.csv'
-WITH CSV DELIMITER '|' NULL '' QUOTE '''';
+WITH CSV HEADER DELIMITER '|' NULL '' QUOTE '''';
 
 -- truncate public."Business"
 

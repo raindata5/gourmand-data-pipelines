@@ -18,7 +18,7 @@ truncate_query = "TRUNCATE public.\"Business\""
 
 sql = f"COPY public.\"Business\" FROM \
 \'/home/ubuntucontributor/gourmand-data-pipelines/{directory}/yelp_business_01.csv\' \
-WITH CSV DELIMITER \'|\' NULL \'\' QUOTE \'\'\'\';"
+WITH CSV HEADER DELIMITER \'|\' NULL \'\' QUOTE \'\'\'\';"
 
 
 
