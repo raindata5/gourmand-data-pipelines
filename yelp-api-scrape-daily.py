@@ -13,7 +13,7 @@ directory = f"local_raw_data/extract_{the_day}"
 
 
 if (len(sys.argv) == 2) and (sys.argv[1] == 'test'):
-    test_var = 100
+    test_var = 500
 else:
     test_var=None
 
