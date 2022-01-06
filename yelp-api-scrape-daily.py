@@ -17,8 +17,14 @@ if (len(sys.argv) == 2) and (sys.argv[1] == 'test'):
 else:
     test_var=None
 
-if not os.path.isdir(directory):
-    os.makedirs(directory)
+# if not os.path.isdir(directory):
+#     os.makedirs(directory)
+
+
+if os.path.exists(f"{directory}/yelp_business_01.csv"):
+  os.remove(f"{directory}/yelp_business_01.csv")
+else:
+  print("The file does not exist")
 
 iterator=2
 parser = configparser.ConfigParser()
