@@ -13,7 +13,7 @@ directory = f"local_raw_data/extract_{the_day}"
 
 
 if (len(sys.argv) == 2) and (sys.argv[1] == 'test'):
-    test_var = 50
+    test_var = 100
 else:
     test_var=None
 
@@ -40,7 +40,32 @@ counties = pd.read_csv(f"{directory}/census_counties_01.csv")
 counties_list = counties.iloc[:,-1].tolist()
 
 
-# bus_data = pd.DataFrame()
+bus_data_df_template = pd.DataFrame(columns=['id',
+                            'alias',
+                            'name',
+                            'image_url',
+                            'is_closed',
+                            'url',
+                            'review_count',
+                            'categories',
+                            'rating',
+                            'transactions',
+                            'price',
+                            'phone',
+                            'display_phone',
+                            'distance',
+                            'coordinates.latitude',
+                            'coordinates.longitude',
+                            'location.address1',
+                            'location.address2',
+                            'location.address3',
+                            'location.city',
+                            'location.zip_code',
+                            'location.country',
+                            'location.state',
+                            'location.display_address',
+                            'county',
+                            'time_extracted']) 
 msg_store = []
 for county_ix, county in enumerate(counties_list[:test_var]):
     counter = 0
@@ -80,9 +105,10 @@ for county_ix, county in enumerate(counties_list[:test_var]):
             bus_data_cut = bus_data.drop(['categories','transactions','location.display_address'], axis=1)
             bus_data_cut_de_dup = bus_data_cut.drop_duplicates(['id'])
             if 'yelp_business_01.csv' not in os.listdir(f"{directory}"):
-                bus_data_cut_de_dup.to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'")
+                bus_data_df_template.append(bus_data_cut_de_dup).to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'")
             else :
-                bus_data_cut_de_dup.to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'", header=False, mode='a')
+                bus_data_df_template.append(bus_data_cut_de_dup).to_csv(f"{directory}/yelp_business_01.csv", index=False, sep='|', quotechar="'", header=False, mode='a')
+        
             print(f'{county}')
             msg = [county_ix,county,ix+1, 'completed', response.status_code] # creating message that the county was completed at a specific iteration
             msg_store.append(msg) # appending the message to the message store

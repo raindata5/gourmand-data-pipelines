@@ -20,15 +20,24 @@ sql = f"COPY public.\"Business\" FROM \
 \'/home/ubuntucontributor/gourmand-data-pipelines/{directory}/yelp_business_01.csv\' \
 WITH CSV HEADER DELIMITER \'|\' NULL \'\' QUOTE \'\'\'\';"
 
-
+# theses commands need to be split up more
 
 try:
     ps_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host= host, port=port)
     ps_cursor = ps_conn.cursor()
     ps_cursor.execute(truncate_query)
+    ps_cursor.close()
+    ps_conn.commit()
+    print('table truncated')
+except Exception as e:
+    print(e)
+
+try:
+    ps_cursor = ps_conn.cursor()
     ps_cursor.execute(sql)
     ps_cursor.close()
     ps_conn.commit()
+    print('data inserted fine into base/stage table')
 except Exception as e:
     print(e)
 
@@ -37,6 +46,7 @@ try:
     sql_file = open('postgres-removing-duplicates.sql','r')
     ps_cursor.execute(sql_file.read())
     ps_conn.commit()
+    print('data inserted fine into main table')
 except Exception as e:
     print(e)
 
