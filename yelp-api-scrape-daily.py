@@ -13,7 +13,7 @@ directory = f"local_raw_data/extract_{the_day}"
 
 
 if (len(sys.argv) == 2) and (sys.argv[1] == 'test'):
-    test_var = 500
+    test_var = 300
 else:
     test_var=None
 
@@ -47,9 +47,7 @@ bus_data_df_template = pd.DataFrame(columns=['id',
                             'is_closed',
                             'url',
                             'review_count',
-                            'categories',
                             'rating',
-                            'transactions',
                             'price',
                             'phone',
                             'display_phone',
@@ -63,7 +61,6 @@ bus_data_df_template = pd.DataFrame(columns=['id',
                             'location.zip_code',
                             'location.country',
                             'location.state',
-                            'location.display_address',
                             'county',
                             'time_extracted']) 
 msg_store = []
