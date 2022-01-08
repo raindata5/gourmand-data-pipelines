@@ -40,7 +40,19 @@ def db_conn():
     ps_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host= host, port=port)
     return ps_conn
 
-def log_end_result(result, tbl, pg_tbl_cnt, bq_tbl_cnt, db_conn):
+def db_conn_log_end_result():
+    parser = configparser.ConfigParser()
+    parser.read("/home/ubuntucontributor/gourmand-data-pipelines/pipeline.conf")
+    dbname = parser.get("postgres_ubuntu_db_airflow", "database")
+    user = parser.get("postgres_ubuntu_db_airflow", "username")
+    password = parser.get("postgres_ubuntu_db_airflow", "password")
+    host = parser.get("postgres_ubuntu_db_airflow", "host")
+    port = parser.get("postgres_ubuntu_db_airflow", "port")
+
+    ps_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host= host, port=port)
+    return ps_conn
+
+def log_end_result(result, tbl, pg_tbl_cnt, bq_tbl_cnt, db_conn_log_end_result):
     load_query = """INSERT INTO validation_run_history(
                     result,
                     tbl,
@@ -49,12 +61,12 @@ def log_end_result(result, tbl, pg_tbl_cnt, bq_tbl_cnt, db_conn):
                     test_run_at)
                 VALUES(%s, %s, %s, %s,
                     current_timestamp);"""
-    cursor = db_conn.cursor()
+    cursor = db_conn_log_end_result.cursor()
     cursor.execute(load_query, (result, tbl, pg_tbl_cnt, bq_tbl_cnt,))
-    db_conn.commit()
+    db_conn_log_end_result.commit()
     cursor.close()
     # db_conn.close()
-    return "logged"
+    print(f"logged {tbl}")
 
 def commit_test(s3_client, bucket_name, db_conn=None):
     the_day = datetime.datetime.now().strftime('%Y-%m-%d') 
@@ -157,13 +169,13 @@ if __name__ == "__main__":
     s3_client, bucket = aws_bucket_client()
 
     ps_conn = db_conn()
-
+    log_db = db_conn_log_end_result()
     logs, failure_tbls, status = commit_test(s3_client=s3_client, bucket_name=bucket)
 
-    [log_end_result(row[0], row[1], row[2], row[3], ps_conn) for row in logs]
+    [log_end_result(row[0], row[1], row[2], row[3], log_db) for row in logs]
 
     ps_conn.close()
-
+    log_db.close()
     if status > 0:
         #send the slack notification specify the tables that are bad
         if sev == 'halt':
