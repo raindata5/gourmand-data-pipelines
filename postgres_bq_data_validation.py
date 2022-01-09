@@ -122,8 +122,8 @@ def commit_test(s3_client, bucket_name, db_conn=None):
         else:
             print('something wrong happened here')
             exit(-1)
-        #return the accruded data
-        return logs, failure_tbls, status
+    #return the accruded data
+    return logs, failure_tbls, status
 
 
 #[]
