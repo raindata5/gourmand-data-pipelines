@@ -8,8 +8,6 @@ import requests
 import json
 import psycopg2
 
-webhook_url = 'https://hooks.slack.com/services/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'
-
 #[]
 #
 
@@ -131,6 +129,7 @@ def commit_test(s3_client, bucket_name, db_conn=None):
 
 # should be result, tbl, count in pg, count in bq, url
 def send_slack_notification(status, tbls, webhook_url,pg_tbl_cnt=None, bq_tbl_cnt=None , msg_override = None):
+
     try:
         if status == 0:
             message = {"text": f"tested {tbls} and the result was a PASS"}
@@ -176,6 +175,9 @@ if __name__ == "__main__":
 
     ps_conn.close()
     log_db.close()
+    parser = configparser.ConfigParser()
+    parser.read("credentials.conf")
+    webhook_url = parser.get("slack", "webhook_url")
     if status > 0:
         #send the slack notification specify the tables that are bad
         if sev == 'halt':

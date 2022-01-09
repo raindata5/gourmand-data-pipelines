@@ -2,8 +2,8 @@ import re
 import os
 from pathlib import Path
 from postgres_bq_data_validation import send_slack_notification
+import configparser
 
-webhook_url = 'https://hooks.slack.com/services/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'
 directory = f"/home/ubuntucontributor/gourmand-dwh"
 path = Path(os.getcwd())
 new_path = path.parent
@@ -27,6 +27,9 @@ cleaned_test_names = [obj.group(1) for obj in cleaned_test_name_objects]
 # still deciding on where to best store the queries but for now they will just be serialized in the local file system
 
 # create functionality for sending slack notification
+parser = configparser.ConfigParser()
+parser.read("credentials.conf")
+webhook_url = parser.get("slack", "webhook_url")
 if len(cleaned_queries) > 0 and len(cleaned_test_names) > 0 :
     status = 1
     send_slack_notification(status, cleaned_test_names, webhook_url=webhook_url, msg_override= f'dbt test \n {cleaned_test_names}')
