@@ -58,7 +58,7 @@ There are also other plans to extend this project which can be seen in the follo
  - [Docker Compose]()
  - [Census API Key]()
  - [Yelp API Key]()
- - [Postgres Database]()
+ - [Postgres Database w/ PGAdmin (psql may work fine)]()
  - [AWS S3 Bucket]()
  - [Google Big Query]()
  - [redis]()
@@ -85,6 +85,39 @@ Initially I was planning on creating this db using Microsoft SQL Server but fort
     3. Here you're going to want to activate your virtual env and run `pip install -r requirements.txt`
     4. Now you can run `alembic upgrade head` and this will create the db staging tables
         > Note: Going forward when using alembic you can always delete my alembic config file and revision folder and run `alembic init` to have your own revison history
-    5.
+    5. To begin with ingesting the data leave your current directory and run `git clone https://github.com/raindata5/gourmand-data-pipelines`, change into this directory
+    Now create a .conf file containing your yelp_credentials and census_credentials in your current directory
+    6. With your python virtual environment enabled the following commands in the following order
+        1. `python census-api.py`
+        2. `python abreviaturas_de_estados.py`
+        3. `python yelp-api-scrape.py not_daily`
+    7. With the data contained in our local file system we can ingest it with the help of the following sql file [**/gourmand-data-pipelines/initial-postgres-load.sql**](https://github.com/raindata5/gourmand-data-pipelines/blob/master/initial-postgres-load.sql) which uses the [COPY]() command
+    8. Head over to your user home directory and create a `profiles.yml` file
+    Refer to the following [documentation]() from dbt to set it up properly
+    9. Return Gourmand-OLTP and run `dbt test` just to make sure everything has gone well up until now \
+    if they're no errors you can now run `dbt run`.
+        >Note: Some tests are included but these may be modified, it is your option whether to run `dbt test` or not.
+    10. The tables in _Production are not quite done yet as they need some modifcations such as index ,etc.\
+    Now we'll open the sql file [**gourmand-data-pipelines/ddl-postgres.sql**]() and run everything here **EXCEPT** the last 2 statements under the asterisks.\
+    These were added because it seemed there was an extra businessid getting added which was not adhering to the FK constraint so it was simpler to just remove it from our bridge table since it doesn't refer to any business in particular
+        >OLTP dbs are not the best fit for many indexes so care was taken to use them sparingly
+
+2. Setting up Big Query
+    1. Before continuing with any more data movement we're going to have to create some tables in our DWH as we will be using a mixture of incrementals loads and also full refresh for other models\
+    After having set up a project and dataset(schema) you can run these [DDL](https://console.cloud.google.com/bigquery?sq=99638138708:1c02f4f575894eccad0192b7682338cc) commands and also the following [DDL](https://console.cloud.google.com/bigquery?sq=99638138708:3ee74f2d20be43928d42de15d6dcf867) for the date dimension. You'll notice that our DWH more closely ressembles a [Snowflake Model]()\
+    2.Now we'll head back to our user home directory and swap out our `profiles.yml` file using this [template]() from dbt and also following their [instructions]() to get access to our DWH in BQ
+
+3. First Data Extraction from Postgres to Big Query
+4. First Data Models in BQ
+5. Setting Up Apache Airflow w/ docker
+6. Setting up Redis
+7. API deployment through CI/CD pipeline with Github Actions
+
+
+        
+
+     
+
+
 
 
