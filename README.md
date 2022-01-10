@@ -3,7 +3,7 @@
 <p align="center">
 <a href="#overview">Overview</a> •
   <a href="#data-architecture-diagram">Data Architecture Diagram</a> •
-    <a href="#concepts">Concepts</a> •
+    <a href="#main-concepts">Main Concepts</a> •
     <a href="#prerequisites">Prerequisites</a> •
     <a href="#set-up">Set-up</a> •
     <a href="#contact">Contact</a> •
