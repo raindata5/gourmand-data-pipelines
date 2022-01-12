@@ -73,7 +73,7 @@ ps_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host= ho
 
 ps_cursor = ps_conn.cursor()
 
-sql_file = open('all-oltp-tables-postgres.sql','r')
+sql_file = open('sql_scripts/all-oltp-tables-postgres.sql','r')
 ps_cursor.execute(sql_file.read())
 table_results = ps_cursor.fetchall()
 

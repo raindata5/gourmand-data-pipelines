@@ -3,9 +3,11 @@
 <p align="center">
 <a href="#overview">Overview</a> •
   <a href="#data-architecture-diagram">Data Architecture Diagram</a> •
+  <a href="#data-visualization">Data Visualization</a> •
     <a href="#main-concepts">Main Concepts</a> •
     <a href="#prerequisites">Prerequisites</a> •
     <a href="#set-up">Set-up</a> •
+    <a href="#where-to-go-from-here">Where to go from here</a>•
     <a href="#contact">Contact</a> •
 </p>
 
@@ -29,7 +31,19 @@ There are also other plans to extend this project which can be seen in the follo
 ---
 
 ## Data Architecture Diagram
-![Alt Image text](data-pipeline-acrhitecture.drawio.png "Architecture Diagram")
+![A diagram of the data architecture created](images/data-pipeline-architecture.drawio.png "Architecture Diagram")
+
+
+## Data Visualization
+
+![A heatmap of the included business](images/heatmap_of_locations.png "Heatmap")
+Above you can see the businesses that we're tracking which will be crucial to take into account upon evaluating external validity during any analysis.
+
+![A dashboard showing the effects of payment level and business categories on merics](images/payment_level_differences.png "Business segments") 
+A simple dashboard showing the benefits of creating a business that caters to providing low-cost food.
+1. Low-cost businesses generate the most amount of reviews (this can lightly be taken for customer traffic)
+2. The fact that a business is a low-cost has little to no impact on it's business rating \
+The majority of our businesses are in the U.S. and low-cost. This puts in perspective a statement I heard a french guy say "On dit qu'ici (c'est-a-dire la france) on vit pour manger mais eux (c'est-a-dire les Amèricains) ils mangent pour vivre" 😅.
 
 
 ## Main Concepts
@@ -222,7 +236,11 @@ Initially I was planning on creating this db using Microsoft SQL Server but fort
     3. Specifically for the data we stored in this project you can navigate to [data-analysis-business-economics-policy/gourmand_data_analysis/](https://github.com/raindata5/data-analysis-business-economics-policy/tree/master/gourmand_data_analysis) and check out the analyses carried out there.
 
 # Where to go from here
-There are some features of this main project that I still want to implement in the directly in the code as well was in the documentation. They are the following:
+There are some features of this main project that I still want to implement in the directly in the code as well was in the documentation. They are the following in no particular order:
+
+- refactor a bunch of the data pipeline code
+- CI/CD Pipeline for data pipeline itself
+- End-to-End test
 - Web Frontend for the API with the [Flask]() framework
 - Web-Hosted Dashboard using [Plotly and Dash]() framework
     - For the Business data as well as the pipeline monitoring
@@ -233,6 +251,7 @@ There are some features of this main project that I still want to implement in t
 - Use [Apache Spark]() for Micro-Batch ingestions
     - Maybe [Debezium]() is a better option
 - Add gifs to the documentation to facilate understanding
+- Set up a virtual network with Azure for facilitating access to directly to database
 
 # Contact
 As I am still editing this project and it's documentation there may be some flaws noticed or any suggestions which I'm always open to 😀!\

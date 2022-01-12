@@ -43,7 +43,7 @@ except Exception as e:
 
 try:
     ps_cursor = ps_conn.cursor()
-    sql_file = open('postgres-removing-duplicates.sql','r')
+    sql_file = open('sql_scripts/postgres-removing-duplicates.sql','r')
     ps_cursor.execute(sql_file.read())
     ps_conn.commit()
     print('data inserted fine into main table')

@@ -6,7 +6,7 @@ ps_conn = db_conn()
 try:
 
     cursor = ps_conn.cursor()
-    sql_file = open('insert-postgres-bh.sql','r')
+    sql_file = open('sql_scripts/insert-postgres-bh.sql','r')
     cursor.execute(sql_file.read())
     # record = cursor.fetchone()
     # res_1 = record[0]
