@@ -41,6 +41,7 @@ Above you can see the businesses that we're tracking which will be crucial to ta
 
 ![A dashboard showing the effects of payment level and business categories on merics](images/payment_level_differences.png "Business segments") 
 A simple dashboard showing the benefits of creating a business that caters to providing low-cost food.
+> Note: There are more than just restaurants included
 1. Low-cost businesses generate the most amount of reviews (this can lightly be taken for customer traffic)
 2. The fact that a business is a low-cost has little to no impact on it's business rating \
 The majority of our businesses are in the U.S. and low-cost. This puts in perspective a statement I heard a french guy say "On dit qu'ici (c'est-a-dire la france) on vit pour manger mais eux (c'est-a-dire les Amèricains) ils mangent pour vivre" 😅.
