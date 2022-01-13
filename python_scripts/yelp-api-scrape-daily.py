@@ -101,11 +101,14 @@ def yelp_daily_pull(api_domain, multiple_business_path, counties_list, limit, of
 if __name__ == "__main__":
     if (len(sys.argv) == 3) and (sys.argv[1] == 'test'):
         test_var = int(sys.argv[2])
-    elif (sys.argv[1] == 'test') and (sys.argv[-1] == sys.argv[1]):
+
+    elif (len(sys.argv) == 2) and (sys.argv[1] == 'test') and (sys.argv[-1] == sys.argv[1]):
         print('example usage: python python_scripts/yelp-api-scrape-daily.py test 10')
-        exit(-1)
-    else:
+
+    elif (len(sys.argv) == 1): 
         test_var=None
+
+        
 
     
     
