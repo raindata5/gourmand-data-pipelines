@@ -5,19 +5,9 @@ import pprint
 import configparser
 from urllib.parse import urlparse, quote
 import pandas as pd
-
-api_base = "https://api.census.gov"
-population_path = "/data/2019/pep/population"
-
-parser = configparser.ConfigParser()
-parser.read("credentials.conf")
-census_key = parser.get("census_credentials", "census_key")
-
-# info needs to be sent as query string
-get_var = "?get=NAME,POP,DATE_CODE"
-county_var = "&for=county:*"
-state_var = "&in=state:*"
-key_var = "&key=%s" % census_key 
+import os
+import datetime
+from pathlib import Path
 
 #[]
 # function for requesting census data
@@ -75,11 +65,20 @@ county_path="&for=county:*", state_path="&in=state:*", variables_map_path="/vari
     if return_df :
         df_data = pd.DataFrame(data=data[1:], columns=data[0])
         return df_data
+
+def create_data_directory(base_dir=None):
+    try:
+        the_day = datetime.datetime.now().strftime('%Y-%m-%d')
+        directory = f"{base_dir}/extract_{the_day}"
+        path = Path(os.getcwd())
+        dir_path = os.path.join(path, directory)
+        os.mkdir(dir_path)
+    except Exception as e:
+        print(f'{base_dir} already exists')
+    return directory
 #[]
 # making the directory to store data
-import os
-import datetime
-from pathlib import Path
+
 
 # Directory
 
@@ -87,22 +86,36 @@ from pathlib import Path
 
 # Path
 
+if __name__ == "__main__":
+    # try:
+    #     the_day = datetime.datetime.now().strftime('%Y-%m-%d')
+    #     directory = f"local_raw_data/extract_{the_day}"
+    #     path = Path(os.getcwd())
+    #     dir_path = os.path.join(path, directory)
+    #     os.mkdir(dir_path)
+    # except Exception as e:
+    #     print('already exists')
+    
+    api_base = "https://api.census.gov"
+    population_path = "/data/2019/pep/population"
 
-try:
-    the_day = datetime.datetime.now().strftime('%Y-%m-%d')
-    directory = f"local_raw_data/extract_{the_day}"
-    path = Path(os.getcwd())
-    dir_path = os.path.join(path, directory)
-    os.mkdir(dir_path)
-except Exception as e:
-    print('already exists')
+    parser = configparser.ConfigParser()
+    parser.read("credentials.conf")
+    census_key = parser.get("census_credentials", "census_key")
 
+    # info needs to be sent as query string
+    get_var = "?get=NAME,POP,DATE_CODE"
+    county_var = "&for=county:*"
+    state_var = "&in=state:*"
+    key_var = "&key=%s" % census_key
+    base_dir='local_raw_data'
 
-the_data, the_data_counties = census_api_request(api_base=api_base, pep_path=population_path, census_key=census_key, return_df=True, transform=True)
+    directory = create_data_directory(base_dir=base_dir)
 
+    the_data, the_data_counties = census_api_request(api_base=api_base, pep_path=population_path, census_key=census_key, return_df=True, transform=True)
 
-the_data.to_csv(f"{directory}/census_data_01.csv", index=False, sep='|', quotechar="'", doublequote=True)
-the_data_counties.to_csv(f"{directory}/census_counties_01.csv", index=False, sep='|', quotechar="'", doublequote=True)
+    the_data.to_csv(f"{directory}/census_data_01.csv", index=False, sep='|', quotechar="'", doublequote=True)
+    the_data_counties.to_csv(f"{directory}/census_counties_01.csv", index=False, sep='|', quotechar="'", doublequote=True)
 
 
 
