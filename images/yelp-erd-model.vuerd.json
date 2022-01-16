@@ -3,9 +3,9 @@
     "version": "2.2.11",
     "width": 2010,
     "height": 2010,
-    "scrollTop": -546,
-    "scrollLeft": -657,
-    "zoomLevel": 0.4,
+    "scrollTop": -737,
+    "scrollLeft": -562,
+    "zoomLevel": 0.27,
     "show": {
       "tableComment": true,
       "columnComment": true,
@@ -532,9 +532,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 424.6345,
-          "top": 371.1901,
-          "zIndex": 17,
+          "left": 502.4122,
+          "top": 393.4123,
+          "zIndex": 63,
           "widthName": 60,
           "widthComment": 84.12088012695312,
           "color": "#D580008E"
@@ -595,12 +595,12 @@
         ],
         "ui": {
           "active": false,
-          "left": 1620.7611541748047,
-          "top": 1703.331,
-          "zIndex": 5,
+          "left": 1630.7611541748047,
+          "top": 1867.4382,
+          "zIndex": 35,
           "widthName": 60,
           "widthComment": 120,
-          "color": "#F31212"
+          "color": "#0C0B0B"
         },
         "visible": true,
         "id": "80c3513e-3f00-4ec1-8584-404f536b6c14"
@@ -681,9 +681,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 20,
-          "top": 1765.8096,
-          "zIndex": 21,
+          "left": 27.4074,
+          "top": 1802.8466,
+          "zIndex": 55,
           "widthName": 111.27786254882812,
           "widthComment": 60,
           "color": "#F31949"
@@ -786,13 +786,36 @@
               "widthDefault": 60
             },
             "id": "b29bdfb9-60b1-4372-9e9b-58ae985272b7"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": true,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": true,
+              "fk": false,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "f0c743d3-90c9-4822-a001-172c8cbd0fd2"
           }
         ],
         "ui": {
           "active": false,
-          "left": 1371.7948,
-          "top": 1039.2469,
-          "zIndex": 24,
+          "left": 1582.9057,
+          "top": 1028.1358,
+          "zIndex": 65,
           "widthName": 101.64486694335938,
           "widthComment": 60,
           "color": "#F51616"
@@ -922,9 +945,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 955.472,
-          "top": 293.7221,
-          "zIndex": 9,
+          "left": 1151.7681,
+          "top": 315.9443,
+          "zIndex": 69,
           "widthName": 60,
           "widthComment": 60,
           "color": "#FF9200"
@@ -1226,9 +1249,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1398.0394744873047,
-          "top": 1849,
-          "zIndex": 4,
+          "left": 1408.0394744873047,
+          "top": 1844.7136,
+          "zIndex": 26,
           "widthName": 159.84584045410156,
           "widthComment": 60
         },
@@ -1698,13 +1721,36 @@
               "widthDefault": 60
             },
             "id": "5d7593a8-1798-4104-bf11-35fae6a2e70b"
+          },
+          {
+            "name": "BusinessID",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 69.78192138671875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "016ed114-3c39-4dd6-947f-e8fcd68d8b92"
           }
         ],
         "ui": {
           "active": false,
-          "left": 514.3738,
-          "top": 1303.7252,
-          "zIndex": 22,
+          "left": 528.4478,
+          "top": 1287.7066,
+          "zIndex": 57,
           "widthName": 60,
           "widthComment": 60,
           "color": "#07D3E4"
@@ -1857,9 +1903,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1130.6389,
-          "top": 1650.2218,
-          "zIndex": 15,
+          "left": 1242.8609,
+          "top": 1619.2165,
+          "zIndex": 62,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F02020"
@@ -2058,9 +2104,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1213.9371,
-          "top": 1254.7228,
-          "zIndex": 16,
+          "left": 1243.5667,
+          "top": 1251.0191,
+          "zIndex": 61,
           "widthName": 60,
           "widthComment": 120,
           "color": "#29F3C0"
@@ -2144,9 +2190,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1432.6667,
-          "top": 594.0724,
-          "zIndex": 13,
+          "left": 1354.889,
+          "top": 557.0352,
+          "zIndex": 68,
           "widthName": 90.59487915039062,
           "widthComment": 120,
           "color": "#F17676"
@@ -2253,9 +2299,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 1.1111,
-          "top": 6.9563,
-          "zIndex": 7,
+          "left": 33.2537,
+          "top": 124.8129,
+          "zIndex": 54,
           "widthName": 87.17588806152344,
           "widthComment": 60,
           "color": "#F02F2F"
@@ -2339,9 +2385,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 0,
-          "top": 1146.7584,
-          "zIndex": 25,
+          "left": 48.1481,
+          "top": 1235.6472,
+          "zIndex": 70,
           "widthName": 151.77281188964844,
           "widthComment": 60,
           "color": "#11BDB0"
@@ -2421,13 +2467,36 @@
               "widthDefault": 60
             },
             "id": "425db34b-cb14-4d4b-9b5f-361013f0125a"
+          },
+          {
+            "name": "",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 60,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "c0cce7fb-1c19-4c33-ac3f-37e200a79af3"
           }
         ],
         "ui": {
           "active": false,
-          "left": 766.9443,
-          "top": 1027.6665,
-          "zIndex": 23,
+          "left": 1044.7218,
+          "top": 975.8147,
+          "zIndex": 66,
           "widthName": 173.3267822265625,
           "widthComment": 103.73780822753906,
           "color": "#F5A0C2F2"
@@ -2620,9 +2689,9 @@
         ],
         "ui": {
           "active": false,
-          "left": 965.5002,
-          "top": 717.7779,
-          "zIndex": 14,
+          "left": 1009.9446,
+          "top": 773.3334,
+          "zIndex": 67,
           "widthName": 60,
           "widthComment": 60,
           "color": "#F51010"
@@ -2634,6 +2703,29 @@
         "name": "BusinessHolding",
         "comment": "",
         "columns": [
+          {
+            "name": "BusinessHoldingID",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": false
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": false,
+              "pfk": false,
+              "widthName": 118.01187133789062,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "f5d351e0-b6db-47a1-b205-01f3a1b8aa5b"
+          },
           {
             "name": "BusinessID",
             "comment": "",
@@ -2725,13 +2817,36 @@
               "widthDefault": 60
             },
             "id": "c450bb0a-a434-4881-8b19-1f181176cbad"
+          },
+          {
+            "name": "BusinessID",
+            "comment": "",
+            "dataType": "",
+            "default": "",
+            "option": {
+              "autoIncrement": false,
+              "primaryKey": false,
+              "unique": false,
+              "notNull": true
+            },
+            "ui": {
+              "active": false,
+              "pk": false,
+              "fk": true,
+              "pfk": false,
+              "widthName": 69.78192138671875,
+              "widthComment": 60,
+              "widthDataType": 60,
+              "widthDefault": 60
+            },
+            "id": "c7edb16c-8fd9-4f38-8773-5e55a3b6c986"
           }
         ],
         "ui": {
           "active": false,
           "left": 0,
-          "top": 536.6382,
-          "zIndex": 12,
+          "top": 467.8882,
+          "zIndex": 46,
           "widthName": 104.11488342285156,
           "widthComment": 60,
           "color": "#FF9200"
@@ -2748,9 +2863,9 @@
         "value": "- query categories\n-- query category details\n",
         "ui": {
           "active": false,
-          "left": 1814.333333333333,
-          "top": 318.99999999999994,
-          "zIndex": 1,
+          "left": 1861.0000000000007,
+          "top": 372.33333333333354,
+          "zIndex": 29,
           "width": 127,
           "height": 100
         },
@@ -2779,43 +2894,6 @@
           "height": 100
         },
         "id": "6b09ab9a-05ac-499d-9db8-e454a4a46354"
-      },
-      {
-        "value": "find an api able to transform state initials to statename\n\nremove the 423 with issue\n\nperhaps i dont need abbrv in s",
-        "ui": {
-          "active": false,
-          "left": 1095.5,
-          "top": 506.25,
-          "zIndex": 11,
-          "width": 127,
-          "height": 100
-        },
-        "id": "7b0fffdd-2f95-4260-9fd4-2fae1612955f"
-      },
-      {
-        "value": "Production\nAnalytics",
-        "ui": {
-          "active": false,
-          "left": 696.5,
-          "top": 57.75,
-          "zIndex": 6,
-          "width": 180,
-          "height": 225,
-          "color": "#F7F7F7"
-        },
-        "id": "d9195124-8e8d-4489-b94f-363fd2ce73bf"
-      },
-      {
-        "value": "to state for id\nto  county for id then join to stg city/city",
-        "ui": {
-          "active": false,
-          "left": 0,
-          "top": 141.888888888889,
-          "zIndex": 10,
-          "width": 127,
-          "height": 100
-        },
-        "id": "e906bf5f-4ddc-4e61-b3ab-a386a53ccdce"
       },
       {
         "value": "trying making business a \"dimension\"\nthen use the ratings and reviews as it's own thing",
@@ -2851,8 +2929,8 @@
           "columnIds": [
             "7271cba7-8423-4e93-ac44-ca89f19e19ab"
           ],
-          "x": 1149.5279539794922,
-          "y": 293.7221,
+          "x": 1345.8240539794922,
+          "y": 315.9443,
           "direction": "top"
         },
         "constraintName": "fk_state_to_city",
@@ -2894,8 +2972,8 @@
           "columnIds": [
             "626163a8-b2ba-4866-a28e-b1818753c8df"
           ],
-          "x": 1324.694853979492,
-          "y": 1650.2218,
+          "x": 1436.916853979492,
+          "y": 1619.2165,
           "direction": "top"
         },
         "end": {
@@ -2903,8 +2981,8 @@
           "columnIds": [
             "bb41427b-0767-4292-89d0-edaf3b0760fa"
           ],
-          "x": 1400.7065320678712,
-          "y": 1487.7228,
+          "x": 1430.3361320678712,
+          "y": 1484.0191,
           "direction": "bottom"
         },
         "constraintName": "fk_users_to_reviews",
@@ -2920,8 +2998,8 @@
           "columnIds": [
             "34ffcc06-315a-4d52-8110-3324cb97eb48"
           ],
-          "x": 955.472,
-          "y": 379.4721,
+          "x": 1151.7681,
+          "y": 401.6943,
           "direction": "left"
         },
         "end": {
@@ -2929,8 +3007,8 @@
           "columnIds": [
             "61de78c8-4d33-4339-a979-f59222ccfbb3"
           ],
-          "x": 910.0362639160156,
-          "y": 620.9401,
+          "x": 987.8139639160156,
+          "y": 643.1623,
           "direction": "right"
         },
         "constraintName": "fk_city_to_business",
@@ -2946,8 +3024,8 @@
           "columnIds": [
             "4fc2b32d-df0d-4658-ab44-8edb22bfca03"
           ],
-          "x": 214.0559539794922,
-          "y": 1765.8096,
+          "x": 221.46335397949218,
+          "y": 1802.8466,
           "direction": "top"
         },
         "end": {
@@ -2955,8 +3033,8 @@
           "columnIds": [
             "68a84043-b0c3-4841-a657-fa649d45bcc7"
           ],
-          "x": 194.0559539794922,
-          "y": 1277.2584,
+          "x": 242.2040539794922,
+          "y": 1366.1472,
           "direction": "bottom"
         },
         "constraintName": "fk_category_to_chaincategory",
@@ -2972,8 +3050,8 @@
           "columnIds": [
             "2c9e791e-361d-4c93-9d9d-9680864ab27e"
           ],
-          "x": 1432.6667,
-          "y": 626.6974,
+          "x": 1354.889,
+          "y": 654.9102,
           "direction": "left"
         },
         "end": {
@@ -2981,9 +3059,9 @@
           "columnIds": [
             "3fc7a02b-1544-45c4-9e24-ca31f91195cd"
           ],
-          "x": 1353.6121079589843,
-          "y": 793.2779,
-          "direction": "right"
+          "x": 1204.0005539794922,
+          "y": 773.3334,
+          "direction": "top"
         },
         "constraintName": "fk_countygrowth_to_county",
         "visible": true,
@@ -2998,8 +3076,8 @@
           "columnIds": [
             "2c9e791e-361d-4c93-9d9d-9680864ab27e"
           ],
-          "x": 1432.6667,
-          "y": 691.9474,
+          "x": 1354.889,
+          "y": 589.6602,
           "direction": "left"
         },
         "end": {
@@ -3007,9 +3085,9 @@
           "columnIds": [
             "f92d758f-bd80-46e7-bcb7-19b523476ffc"
           ],
-          "x": 1343.5839079589844,
-          "y": 379.4721,
-          "direction": "right"
+          "x": 1345.8240539794922,
+          "y": 487.4443,
+          "direction": "bottom"
         },
         "constraintName": "fk_countygrowth_to_city",
         "visible": true,
@@ -3024,8 +3102,8 @@
           "columnIds": [
             "556aae36-202c-41dc-8c70-8000c89d266c"
           ],
-          "x": 439.07084731445315,
-          "y": 82.4563,
+          "x": 471.2134473144531,
+          "y": 200.3129,
           "direction": "right"
         },
         "end": {
@@ -3033,8 +3111,8 @@
           "columnIds": [
             "790fd0be-04e2-4e7d-8e91-a674013695c4"
           ],
-          "x": 667.3353819580078,
-          "y": 371.1901,
+          "x": 745.1130819580078,
+          "y": 393.4123,
           "direction": "top"
         },
         "constraintName": "fk_paymentmethod_to_business",
@@ -3050,8 +3128,8 @@
           "columnIds": [
             "d81470d2-45fb-4636-8b52-57a9005f38d3"
           ],
-          "x": 667.3353819580078,
-          "y": 870.6901,
+          "x": 805.7883024475097,
+          "y": 892.9123,
           "direction": "bottom"
         },
         "end": {
@@ -3059,8 +3137,8 @@
           "columnIds": [
             "afb7817e-f3ff-4cd4-9cba-c2d416518a36"
           ],
-          "x": 388.1119079589844,
-          "y": 1212.0084,
+          "x": 436.2600079589844,
+          "y": 1300.8972,
           "direction": "right"
         },
         "constraintName": "fk_business_to_businesscategory",
@@ -3076,8 +3154,8 @@
           "columnIds": [
             "d81470d2-45fb-4636-8b52-57a9005f38d3"
           ],
-          "x": 829.1359699300131,
-          "y": 870.6901,
+          "x": 927.1387434265137,
+          "y": 892.9123,
           "direction": "bottom"
         },
         "end": {
@@ -3085,8 +3163,8 @@
           "columnIds": [
             "bdab41e5-d21a-4d66-be1e-215dc22b4517"
           ],
-          "x": 1213.9371,
-          "y": 1371.2228,
+          "x": 1243.5667,
+          "y": 1367.5191,
           "direction": "left"
         },
         "constraintName": "fk_business_to_reviews",
@@ -3102,8 +3180,8 @@
           "columnIds": [
             "d81470d2-45fb-4636-8b52-57a9005f38d3"
           ],
-          "x": 505.53479398600257,
-          "y": 870.6901,
+          "x": 563.0874204895019,
+          "y": 892.9123,
           "direction": "bottom"
         },
         "end": {
@@ -3111,13 +3189,91 @@
           "columnIds": [
             "14f817c0-d3ff-46dd-9e06-b80c84c632f4"
           ],
-          "x": 766.9443,
-          "y": 1092.9165,
+          "x": 1044.7218,
+          "y": 1051.3147,
           "direction": "left"
         },
         "constraintName": "fk_business_to_businesstransactionstypes",
         "visible": true,
         "id": "009666d7-fd19-4440-9c70-e429dbee948d"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "0ec5e409-851a-457e-b84a-430ac15b7074",
+          "columnIds": [
+            "d81470d2-45fb-4636-8b52-57a9005f38d3"
+          ],
+          "x": 502.4122,
+          "y": 643.1623,
+          "direction": "left"
+        },
+        "end": {
+          "tableId": "a52eb8a7-9e56-4e0b-af24-7be36f923b7a",
+          "columnIds": [
+            "c7edb16c-8fd9-4f38-8773-5e55a3b6c986"
+          ],
+          "x": 405.0118713378906,
+          "y": 563.8882,
+          "direction": "right"
+        },
+        "constraintName": "fk_business_to_businessholding",
+        "visible": true,
+        "id": "e1ab1353-eeb4-4de6-8f7a-52b262006556"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "0ec5e409-851a-457e-b84a-430ac15b7074",
+          "columnIds": [
+            "d81470d2-45fb-4636-8b52-57a9005f38d3"
+          ],
+          "x": 684.4378614685058,
+          "y": 892.9123,
+          "direction": "bottom"
+        },
+        "end": {
+          "tableId": "2b6d0d53-bb73-4054-9a42-663b82842230",
+          "columnIds": [
+            "016ed114-3c39-4dd6-947f-e8fcd68d8b92"
+          ],
+          "x": 754.8697284057617,
+          "y": 1287.7066,
+          "direction": "top"
+        },
+        "constraintName": "fk_business_to_event",
+        "visible": true,
+        "id": "0291822d-ae39-46cb-b3c0-4d5a8f51dab4"
+      },
+      {
+        "identification": false,
+        "relationshipType": "OneN",
+        "startRelationshipType": "Dash",
+        "start": {
+          "tableId": "fa205198-62c2-47c1-bd32-21950d988af1",
+          "columnIds": [
+            "f0c743d3-90c9-4822-a001-172c8cbd0fd2"
+          ],
+          "x": 1582.9057,
+          "y": 1113.8858,
+          "direction": "left"
+        },
+        "end": {
+          "tableId": "d5a109f2-0b5b-4a64-ace4-9562b6394330",
+          "columnIds": [
+            "c0cce7fb-1c19-4c33-ac3f-37e200a79af3"
+          ],
+          "x": 1432.8337079589844,
+          "y": 1051.3147,
+          "direction": "right"
+        },
+        "constraintName": "fk_transactiontype_to_businesstransactionsbridge",
+        "visible": true,
+        "id": "ac683fe7-65bc-4c0e-a75d-5726bd512a05"
       }
     ]
   }

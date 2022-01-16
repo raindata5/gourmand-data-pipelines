@@ -14,7 +14,7 @@
 ---
 
 ## Overview
-This projects look to leverage multiple tools to create a data architecture that could help serve as the backend for a business. While the initial focus was simply ony creating an data pipeline to move the data from one source <em>x</em> to a data warehouse <em>y</em> the project has evolved to include a number of supplementary technologies/features partially due to problems that arose out of the blue. Fortunately while there may not always be meer solutions to everything there's always a nice trade-off i.e. compromise.\
+This project look to leverage multiple tools to create a data architecture that could help serve as the backend for a business. While the initial focus was simply ony creating an data pipeline to move the data from one source <em>x</em> to a data warehouse <em>y</em> the project has evolved to include a number of supplementary technologies/features partially due to problems that arose out of the blue. Fortunately while there may not always be meer solutions to everything there's always a nice trade-off i.e. compromise.\
 To begin we'll extract data from 3 sources ,namely, the **Census API** , a [web page]("https://www.50states.com/abbreviations.htm") via webscrape, and the **Yelp API** and push this to a **Postgres** database.\
 Initially this will be used to simulate a source db using **dbt** to normalize the data as would be expected in most OLTP dbs.\
 With that setup data from yelp will be pulled daily and inserted into this source db.\
@@ -36,7 +36,7 @@ There are also other plans to extend this project which can be seen in the follo
 
 ## Data Visualization
 
-![A heatmap of the included business](images/heatmap_of_locations.png "Heatmap")
+![A heatmap of the included businesses](images/heatmap_of_locations.png "Heatmap")
 Above you can see the businesses that we're tracking which will be crucial to take into account upon evaluating external validity during any analysis.
 
 ![A dashboard showing the effects of payment level and business categories on merics](images/payment_level_differences.png "Business segments") 
@@ -48,36 +48,36 @@ The majority of our businesses are in the U.S. and low-cost. This puts in perspe
 
 
 ## Main Concepts
- - [Data Pipeline]()
- - [Database Migration]()
- - [Data Modeling]()
- - [Data Validation]()
- - [Application Programming Interface (API)]()
- - [Workflow Orchestrations]()
- - [Cache]()
- - [Key/Value Store]()
- - [Logging]()
- - [Containers]()
- - [Data Lake]()
- - [Data Analysis]()
+ - [Data Pipeline](https://www.snowflake.com/guides/data-pipeline#:~:text=A%20data%20pipeline%20is%20a%20means%20of%20moving,steps%20involved%20in%20aggregating%2C%20organizing%2C%20and%20moving%20data.)
+ - [Database Migration](https://www.simform.com/blog/database-migration/)
+ - [Data Modeling](https://en.wikipedia.org/wiki/Data_modeling)
+ - [Data Validation](https://en.wikipedia.org/wiki/Data_validation_and_reconciliation#:~:text=Data%20validation%201%20Data%20filtering.%20Data%20filtering%20denotes,Result%20validation.%20...%203%20Gross%20error%20detection.%20)
+ - [Application Programming Interface (API)](https://en.wikipedia.org/wiki/API)
+ - [Workflow Orchestrations](https://www.openprisetech.com/blog/what-is-data-orchestration/#:~:text=Data%20Orchestration%20is%20the%20automation%20of%20data-driven%20processes,many%20different%20systems%2C%20departments%2C%20and%20types%20of%20data.)
+ - [Cache](https://en.wikipedia.org/wiki/Cache_(computing))
+ - [Key/Value Store](https://en.wikipedia.org/wiki/Key%E2%80%93value_database)
+ - [Logging](https://en.wikipedia.org/wiki/Key%E2%80%93value_database)
+ - [Containers](https://www.docker.com/resources/what-container)
+ - [Data Lake](https://aws.amazon.com/big-data/datalakes-and-analytics/what-is-a-data-lake/)
+ - [Data Analysis](https://en.wikipedia.org/wiki/Data_analysis)
 
 ## Prerequisites
- - [Docker]()
- - [Docker Compose]()
- - [Census API Key]()
- - [Yelp API Key]()
- - [Postgres Database w/ PGAdmin (psql may work fine)]()
- - [AWS S3 Bucket]()
- - [Google Big Query]()
- - [Redis]()
- - [Python (needed libraries will be contained in requirements.txt)]()
- - [Python Virtuals Environment/s]()
+ - [Docker](https://docs.docker.com/engine/install/)
+ - [Docker Compose](https://docs.docker.com/compose/)
+ - [Census API Key](https://www.census.gov/data/developers/guidance/api-user-guide.Core_Concepts.html)
+ - [Yelp API Key](https://www.yelp.com/developers/documentation/v3)
+ - [Postgres Database w/ PGAdmin (psql may work fine)](https://www.postgresql.org/download/)
+ - [AWS S3 Bucket](https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html)
+ - [Google Big Query](https://cloud.google.com/resource-manager/docs/creating-managing-projects#:~:text=Creating%20a%20Project%20in%20Google%20Cloud%201%20Go,entering%20new%20project%20details%2C%20click%20Create.%20See%20More.)
+ - [Redis](https://redis.io/download)
+ - [Python (needed libraries will be contained in requirements.txt)](https://www.python.org/downloads/)
+ - [Python Virtuals Environment/s](https://docs.python.org/3/library/venv.html)
  <!-- - [hold]()
  - [hold]() -->
 
 ## Set-up
 At the moment this project spans several git repositories. Partially because a service-oriented architecture seemed more desirable and also as explained in the <a href="#overview">Overview</a> the project naturally evolved as I incorporated other concepts and technologies that I've learned.Nonetheless I certainly have plans to condense these repos into only in the future so both a grouped repo and the individual ones will remain available.\
-For the time being here is the totality of the repositories that will be referenced\
+For the time being here is the totality of the repositories that will be referenced
 
 - [Source DB Creation](https://github.com/raindata5/Gourmand-OLTP)
 - [DWH Modeling](https://github.com/raindata5/gourmand-dwh)
@@ -87,7 +87,10 @@ For the time being here is the totality of the repositories that will be referen
 - [Data Orchestration with Apache Airflow](https://github.com/raindata5/pipeline-scripts)
 
 1. Setting up the OLTP database \
-Initially I was planning on creating this db using Microsoft SQL Server but fortunately I was able to use [Alembic]() to help with the db migration and it has the benefit of also helping set up this project.
+Initially I was planning on creating this db using Microsoft SQL Server but fortunately I was able to use [Alembic]() to help with the db migration and it has the benefit of also helping set up this project. The goal is to end up with the following normalized data model shown with a very well designed ERD editor which you can find [here](https://github.com/vuerd/vuerd)
+
+    ![](images/oltp_db_model.png "Normalized Model")
+    > Note: The table EventCategory isn't connected to event. We'll use this scenario in the future to show how to solve schema evolution problems
     1. First clone the repo by doing `git clone https://github.com/raindata5/Gourmand-OLTP.git`
     2. Now go into the directory of this repo if you're not already there
     3. Here you're going to want to activate your virtual env and run `pip install -r requirements.txt`
@@ -239,10 +242,10 @@ Initially I was planning on creating this db using Microsoft SQL Server but fort
 # Where to go from here
 There are some features of this main project that I still want to implement in the directly in the code as well was in the documentation. They are the following in no particular order:
 
-- refactor a bunch of the data pipeline code
+- Refactor a bunch of the data pipeline code
 - CI/CD Pipeline for data pipeline itself
 - End-to-End test
-- Web Frontend for the API with the [Flask]() framework
+- Web Frontend for the API using simple [HTML]() framework
 - Web-Hosted Dashboard using [Plotly and Dash]() framework
     - For the Business data as well as the pipeline monitoring
 - Dedicated Log Analysis and Storage using [ELK stack]()

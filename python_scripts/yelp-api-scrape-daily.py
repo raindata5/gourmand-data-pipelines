@@ -99,19 +99,17 @@ def yelp_daily_pull(api_domain, multiple_business_path, counties_list, limit, of
 
 
 if __name__ == "__main__":
+    # this allows a test amount of data to be pulled from the api
     if (len(sys.argv) == 3) and (sys.argv[1] == 'test'):
         test_var = int(sys.argv[2])
 
     elif (len(sys.argv) == 2) and (sys.argv[1] == 'test') and (sys.argv[-1] == sys.argv[1]):
         print('example usage: python python_scripts/yelp-api-scrape-daily.py test 10')
-
+    # if test is not specified then we will pull the maximum amount of records
     elif (len(sys.argv) == 1): 
         test_var=None
 
         
-
-    
-    
     directory = create_data_directory(base_dir='local_raw_data')
     # since the csv file is being appended to (if it already is present) any residual file 
     # needs to be removed first
@@ -129,7 +127,6 @@ if __name__ == "__main__":
     multiple_business_path = '/v3/businesses/search'
     individual_business_path = '/v3/businesses/' # the business id is passed in at the end
     individual_business_review_path = '/reviews/'
-
     limit = 'limit=50'
     offset = 'offset=50'
     headers = {"Authorization": "Bearer %s" % secret_key}
