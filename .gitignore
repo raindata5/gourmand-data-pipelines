@@ -7,3 +7,4 @@ yelp-data-venv-windows/
 *.conf
 *.csv
 *.json
+python_scripts/__pycache__/*

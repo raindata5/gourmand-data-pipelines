@@ -89,7 +89,7 @@ For the time being here is the totality of the repositories that will be referen
 1. Setting up the OLTP database \
 Initially I was planning on creating this db using Microsoft SQL Server but fortunately I was able to use [Alembic]() to help with the db migration and it has the benefit of also helping set up this project. The goal is to end up with the following normalized data model shown with a very well designed ERD editor which you can find [here](https://github.com/vuerd/vuerd)
 
-    ![](images/oltp_db_model.png "Normalized Model")
+    ![Normalized data model for oltp db](images/oltp_db_model.png "Normalized Model")
     > Note: The table EventCategory isn't connected to event. We'll use this scenario in the future to show how to solve schema evolution problems
     1. First clone the repo by doing `git clone https://github.com/raindata5/Gourmand-OLTP.git`
     2. Now go into the directory of this repo if you're not already there
@@ -140,7 +140,13 @@ Initially I was planning on creating this db using Microsoft SQL Server but fort
     `python postgres-to-s3.py`\
     `python s3-to-bigquery.py`
 
-4. First Data Models in BQ
+4. First Data Models in BQ\
+Here we are going to want out data model to look like the following 
+
+    ![](images/olap_db_model.png "Normalized Model")
+
+    >Note: This is a regular denormalized data model and considering the options we have when it comes to storage we can always create views of more wide tables on top of these tables to facilitate analytical querying.
+    
     1. The data in BQ we can now run \
     `git clone https://github.com/raindata5/gourmand-dwh.git`
     2. Switch into this directory now and having deactivated your previous virtual environment, activate one for this directory and run\
@@ -245,7 +251,7 @@ There are some features of this main project that I still want to implement in t
 - Refactor a bunch of the data pipeline code
 - CI/CD Pipeline for data pipeline itself
 - End-to-End test
-- Web Frontend for the API using simple [HTML]() framework
+- Web Frontend for the API using simple [HTML]()
 - Web-Hosted Dashboard using [Plotly and Dash]() framework
     - For the Business data as well as the pipeline monitoring
 - Dedicated Log Analysis and Storage using [ELK stack]()

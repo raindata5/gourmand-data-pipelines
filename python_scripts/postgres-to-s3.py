@@ -10,24 +10,15 @@ import csv
 import datetime
 from google.oauth2 import service_account
 from google.cloud import bigquery
+from python_scripts.utils import create_data_directory, bq_client, db_conn, s3_client_bucket
 
-os.listdir()
+# os.listdir()
 
-the_day = datetime.datetime.now().strftime('%Y-%m-%d') 
-raw_directory = f"raw_data/extract_{the_day}"
-curated_directory = f"curated_data/extract_{the_day}"
-
-if not os.path.isdir(raw_directory):
-    os.makedirs(raw_directory)
-if not os.path.isdir(curated_directory):
-    os.makedirs(curated_directory)
+raw_directory = create_data_directory(base_dir='raw_data')
+curated_directory = create_data_directory(base_dir='curated_data')
 
 KEY_PATH = "gourmanddwh-f75384f95e86.json"
-
-CREDS = service_account.Credentials.from_service_account_file(KEY_PATH)
-
-client = bigquery.Client(credentials=CREDS, project=CREDS.project_id)
-
+client = bq_client(keypath=KEY_PATH)
 
 # change these to the actual production tables later in ...also add in support for event since it is an incremental model
 fbh_date_query = "select coalesce(max(CloseDate), '1900-01-01') from `gourmanddwh.g_production.FactBusinessHolding`"
@@ -49,27 +40,19 @@ data2 = [row for row in data]
 cg_date_res = data2[0][0]
 
 
+event_date_query = "select coalesce(max(LastEditedWhen), '1900-01-01') from `gourmanddwh.g_production.DimEvent`"
+data = client.query(event_date_query).result()
+
+data2 = [row for row in data]
+
+event_date_res = data2[0][0]
 
 
 
 #[]
 # postgres extracts
 
-parser = configparser.ConfigParser()
-parser.read("pipeline.conf")
-dbname = parser.get("postgres_ubuntu_db", "database")
-user = parser.get("postgres_ubuntu_db", "username")
-password = parser.get("postgres_ubuntu_db", "password")
-host = parser.get("postgres_ubuntu_db", "host")
-port = parser.get("postgres_ubuntu_db", "port")
-
-parser.read("pipeline.conf")
-access_key = parser.get("aws_boto_credentials", "access_key")
-secret_key = parser.get("aws_boto_credentials", "secret_key")
-bucket_name = parser.get("aws_boto_credentials", "bucket_name")
-account_id = parser.get("aws_boto_credentials", "account_id")
-
-ps_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host= host, port=port)
+ps_conn = db_conn()
 
 ps_cursor = ps_conn.cursor()
 
@@ -111,13 +94,25 @@ for table in table_results:
                             lasteditedwhen,\
                             concat(countyid, \'-\', estimationyear) as IncrementalCompKey from {table[0]}'
             final_CG_QUERY = CG_QUERY + " WHERE LastEditedWhen > %s"
-            inc_select_rows_query = select_cnt_query + " WHERE LastEditedWhen > %s "
+            inc_select_rows_query = select_cnt_query + " WHERE LastEditedWhen > %s"
             ps_cursor.execute(inc_select_rows_query, (cg_date_res,))
             cnt_res = ps_cursor.fetchone()[0]
             ix = (cnt_res,table[2],)
             cnt_results_tbl.append(ix)
 
             ps_cursor.execute(final_CG_QUERY, (cg_date_res,))
+            results = ps_cursor.fetchall()
+
+        elif table[2] == "event":
+            final_event_query = select_rows_query + " WHERE LastEditedWhen > %s"
+            inc_select_rows_query = select_cnt_query + " WHERE LastEditedWhen > %s"
+
+            ps_cursor.execute(inc_select_rows_query, (event_date_res,))
+            cnt_res = ps_cursor.fetchone()[0]
+            ix = (cnt_res,table[2],)
+            cnt_results_tbl.append(ix)
+
+            ps_cursor.execute(final_event_query, (event_date_res,))
             results = ps_cursor.fetchall()
 
         elif table[2] == 'businesstransactionbridge':
@@ -165,10 +160,8 @@ with open(f'{raw_directory}/tbl_cnt_results.csv', 'w', encoding='UTF-8') as fp:
     csv_w.writerows(cnt_results_tbl)
 
 
+s3_client, bucket_name = s3_client_bucket()
 
-s3_client = boto3.client('s3',
-    aws_access_key_id=access_key,
-    aws_secret_access_key=secret_key)
 
 for table_file in table_results:   
     try:
