@@ -1,6 +1,6 @@
 import configparser
 import psycopg2
-from python_scripts.utils import execute_commit_sql_statement, create_data_directory, db_conn
+from utils import execute_commit_sql_statement, create_data_directory, db_conn
 
 
 if __name__ == "__main__":

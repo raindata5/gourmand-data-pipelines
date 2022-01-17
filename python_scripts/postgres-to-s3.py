@@ -10,7 +10,7 @@ import csv
 import datetime
 from google.oauth2 import service_account
 from google.cloud import bigquery
-from python_scripts.utils import create_data_directory, bq_client, db_conn, s3_client_bucket
+from utils import create_data_directory, bq_client, db_conn, s3_client_bucket
 
 # os.listdir()
 

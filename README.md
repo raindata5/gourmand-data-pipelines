@@ -258,8 +258,8 @@ There are some features of this main project that I still want to implement in t
     - While able to implement this on my local computer for sending the Postgres logs to ElasticSearch my current Ubuntu VM most likely dont't have enough ram for this
 - Make more use of Docker
     - Currently only the API supports deployment with Docker as can be seen in it's respective repository
-- Use [Apache Spark]() for Micro-Batch ingestions
-    - Maybe [Debezium]() is a better option
+- Use [Apache Spark]() for transformations and possibly ingestions
+- Replicate database using Debezium and pair that with Kafka to send those to a DWH
 - Add gifs to the documentation to facilate understanding
 - Set up a virtual network with Azure for facilitating access to directly to database
 
