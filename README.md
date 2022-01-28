@@ -14,7 +14,7 @@
 ---
 
 ## Overview
-This project look to leverage multiple tools to create a data architecture that could help serve as the backend for a business. While the initial focus was simply ony creating an data pipeline to move the data from one source <em>x</em> to a data warehouse <em>y</em> the project has evolved to include a number of supplementary technologies/features partially due to problems that arose out of the blue. Fortunately while there may not always be meer solutions to everything there's always a nice trade-off i.e. compromise.\
+This project looks to leverage multiple tools to create a data architecture that could help serve as the backend for a business and even the frontend (more on this in due time). While the initial focus was simply ony creating an data pipeline to move the data from one source <em>x</em> to a data warehouse <em>y</em> the project has evolved to include a number of supplementary technologies/features partially due to problems that arose out of the blue. Fortunately while there may not always be meer solutions to everything there's always a nice trade-off i.e. compromise.\
 To begin we'll extract data from 3 sources ,namely, the **Census API** , a [web page]("https://www.50states.com/abbreviations.htm") via webscrape, and the **Yelp API** and push this to a **Postgres** database.\
 Initially this will be used to simulate a source db using **dbt** to normalize the data as would be expected in most OLTP dbs.\
 With that setup data from yelp will be pulled daily and inserted into this source db.\
@@ -259,7 +259,7 @@ There are some features of this main project that I still want to implement in t
 - Make more use of Docker
     - Currently only the API supports deployment with Docker as can be seen in it's respective repository
 - Use [Apache Spark]() for transformations and possibly ingestions
-- Replicate database using Debezium and pair that with Kafka to send those to a DWH
+- Replicate database using <a href="https://debezium.io/"> Debezium</a> and pair that with Kafka to send those to a DWH
 - Add gifs to the documentation to facilate understanding
 - Set up a virtual network with Azure for facilitating access to directly to database
 

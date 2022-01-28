@@ -1,6 +1,6 @@
 import configparser
 import psycopg2
-from utils import execute_commit_sql_statement, create_data_directory, db_conn
+from pipeline_ppackage.utils import execute_commit_sql_statement, create_data_directory, db_conn
 
 
 if __name__ == "__main__":

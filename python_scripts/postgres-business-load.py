@@ -1,14 +1,8 @@
 from datetime import datetime
 import psycopg2
 import configparser
-from postgres_bq_data_validation import db_conn
-from census_api import create_data_directory
+from pipeline_ppackage.utils import create_data_directory, execute_commit_sql_statement, db_conn
 
-def execute_commit_sql_statement(sql_statement, db_conn):
-        ps_cursor = db_conn.cursor()
-        ps_cursor.execute(sql_statement)
-        ps_cursor.close()
-        db_conn.commit()
 
 
 
