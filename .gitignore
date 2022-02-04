@@ -2,6 +2,7 @@
 # local_data_extracts/
 # raw_data/
 # test_data/
+*.pyc
 yelp-data-venv/
 yelp-data-venv-windows/
 *.conf

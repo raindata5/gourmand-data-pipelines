@@ -1,7 +1,7 @@
 from datetime import datetime
 import psycopg2
 import configparser
-from pipeline_ppackage.utils import create_data_directory, execute_commit_sql_statement, db_conn
+from pipeline_ppackage.utils import create_data_directory, execute_commit_sql_statement2, db_conn, PostgresConnection
 
 
 
@@ -15,30 +15,35 @@ if __name__ == "__main__":
     sql = f"COPY public.\"Business\" FROM \
     \'/home/ubuntucontributor/gourmand-data-pipelines/{directory}/yelp_business_01.csv\' \
     WITH CSV HEADER DELIMITER \'|\' NULL \'\' QUOTE \'\'\'\';"
-
+    ps = PostgresConnection()
     # establishes connection to the database
-    try:
-        ps_conn = db_conn()
-    except Exception as e:
-        print(e)
+    # try:
+    #     ps.start_connection()
+    # except Exception as e:
+    #     print(e)
     
+    # try:
+
+    # except Exception as e:
+    #     print(e)
+
+    # try:
+
+    # except Exception as e:
+    #     print(e)
+    #     exit(1)
+
     try:
-        execute_commit_sql_statement(sql_statement=truncate_query, db_conn=ps_conn)
+        ps.start_connection()
+        execute_commit_sql_statement2(sql_statement=truncate_query, postgres_connection_obj=ps)
         print('table truncated')
-    except Exception as e:
-        print(e)
-
-    try:
-        execute_commit_sql_statement(sql_statement=sql, db_conn=ps_conn)
+        execute_commit_sql_statement2(sql_statement=sql, postgres_connection_obj=ps)
         print('data inserted fine into base/stage table')
-    except Exception as e:
-        print(e)
-
-    try:
         sql_file = open('sql_scripts/postgres-removing-duplicates.sql','r')
-        execute_commit_sql_statement(sql_statement=sql_file.read(), db_conn=ps_conn)
+        execute_commit_sql_statement2(sql_statement=sql_file.read(), postgres_connection_obj=ps)
         print('data inserted fine into main table')
     except Exception as e:
         print(e)
-
-    ps_conn.close()
+        exit(1)
+    ps.close_cursor()
+    ps.close_connection()

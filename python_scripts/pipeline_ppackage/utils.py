@@ -1,3 +1,4 @@
+from optparse import Option
 import os
 from pathlib import Path
 import datetime
@@ -10,57 +11,7 @@ import boto3
 import pandas as pd
 import csv
 import requests
-
-class DbConn():
-    parser = configparser.ConfigParser()
-    parser.read('pipeline.conf')
-
-    def __init__(self):
-        # self.conn = None
-        # self.cursor = None
-        # self.dbname = None
-        # self.user = None
-        # self.password = None
-        # self.host = None
-        # self.port = None
-        self.dbname = self.parser.get("postgres_ubuntu_db", "database")
-        self.user = self.parser.get("postgres_ubuntu_db", "username")
-        self.password = self.parser.get("postgres_ubuntu_db", "password")
-        self.host = self.parser.get("postgres_ubuntu_db", "host")
-        self.port = self.parser.get("postgres_ubuntu_db", "port")
-        ps_conn = psycopg2.connect(dbname=self.dbname, user=self.user, password=self.password, host=self.host, port=self.port)
-        self.conn = ps_conn
-
-    # def initialize_conn(self):
-    #     ps_conn = psycopg2.connect(dbname=self.dbname, user=self.user, password=self.password, host=self.host, port=self.port)
-    #     self.conn = ps_conn
-
-    def start_connection(self):
-        ps_conn = psycopg2.connect(dbname=self.dbname, user=self.user, password=self.password, host=self.host, port=self.port)
-        self.conn = ps_conn
-
-    def start_cursor(self):
-        if self.conn:
-            cursor = self.conn.cursor()
-            self.cursor = cursor
-        elif not self.conn:
-            print('connection not initialized yet')
-
-    def close_cursor(self, cursor):
-        if self.cursor:
-            self.cursor.close()
-        self.cursor=None
-
-    def commit_connection(self):
-        if self.conn:
-            self.conn.commit()
-    
-    def close_connection(self):
-        if self.conn:
-            self.conn.close()
-        
-        self.conn = None
-
+from typing import Set
 
 
 class PostgresConnection():
@@ -81,7 +32,11 @@ class PostgresConnection():
         self.port: str = self.parser.get("postgres_ubuntu_db", "port")
     
     def start_connection(self) -> None:
-        ps_conn = psycopg2.connect(dbname=self.dbname, user=self.user, password=self.password, host=self.host, port=self.port)
+        try:
+            ps_conn = psycopg2.connect(dbname=self.dbname, user=self.user, password=self.password, host=self.host, port=self.port)
+        except (psycopg2.OperationalError, psycopg2.InternalError):
+            print('Database unreachable on first attempt going to try a second time')
+            ps_conn = psycopg2.connect(dbname=self.dbname, user=self.user, password=self.password, host=self.host, port=self.port)
         self.conn = ps_conn
 
     def start_cursor(self) -> None:
@@ -94,26 +49,34 @@ class PostgresConnection():
     def close_cursor(self) -> None:
         if self.cursor:
             self.cursor.close()
-        self.cursor=None
+        # self.cursor=None
 
     def commit_connection(self) -> None:
-        if self.conn:
+        """We'll commit the transaction only if there is a connection object yet to be closed however 
+        if it is closed then we'll start a new connection assuming it closed by itself or was broken"""
+        if self.conn and self.conn.closed == 0:
             self.conn.commit()
+        elif self.conn and self.conn.closed != 0:
+            self.start_connection()
+            self.start_cursor()
+            print('connection was closed prematurely')
+        elif not self.conn:
+            print('no valid connection')
     
     def close_connection(self) -> None:
         if self.conn:
             self.conn.close()       
-        self.conn = None
+        # self.conn = None
 
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__name__}("
             f"{self.conn},"
             f"{self.cursor},"
-            f"{self.dbname},"
+            f"xxx,"
             f"{self.user},"
-            f"{self.password},"
-            f"{self.host},"
+            f"xxx,"
+            f"xxx,"
             f"{self.port})"
             )
 
@@ -129,13 +92,24 @@ def db_conn():
     ps_conn = psycopg2.connect(dbname=dbname, user=user, password=password, host= host, port=port)
     return ps_conn
 
-def execute_commit_sql_statement2(sql_statement, db_conn, arguments: tuple = None, to_fetch: str = None, rollback_transaction = False):
+
+class SqlReturn(Set[str]):
+    def verificar(self, choice: str) -> None:
+        if choice not in self:
+            raise ValueError(f'no se permite éste {choice!r} :D')
+        print(choice)
+        
+return_options = SqlReturn({"fetchone()", "fetchall()", None})
+
+def execute_commit_sql_statement2(sql_statement, postgres_connection_obj: PostgresConnection, arguments: tuple = None, to_fetch: str = None, rollback_transaction = False) -> Optional[None]:
     """
     A utility function to quickly run an sql statement
     Params:
-        db_conn: This must be an already initialized db connection
+        :param sql_statement:
+        :param db_cursor: This must be an already initialized db cursor
         :param arguments: tuple a tuple that specifies arguments that you want to be passed into an sql statement containing '?'
         :param to_fetch: string accepts either 'fetch_one()' or 'fetch_all()' depending on the results you expect
+        :param rollback_transaction:
     Returns:
     Raises:
     >>> results = execute_commit_sql_statement2(sql_statement = 'select * from table where date = ?', db_conn=conn
@@ -143,22 +117,24 @@ def execute_commit_sql_statement2(sql_statement, db_conn, arguments: tuple = Non
     >>> results
     """
     results = None
-    ps_cursor = db_conn.cursor()
     # and there are arguments to be passed in and they are of type tuple
     if arguments and type(arguments) == tuple:
-        ps_cursor.execute(sql_statement, arguments)
+        postgres_connection_obj.cursor.execute(sql_statement, arguments)
     elif not arguments:
-        ps_cursor.execute(sql_statement)
+        postgres_connection_obj.cursor.execute(sql_statement)
+    
+    return_options.verificar(to_fetch)
 
     # if only one result is to be fetched
     if to_fetch == 'fetchone()':
-        results = ps_cursor.fetchone()
+        results = postgres_connection_obj.cursor.fetchone()[0]
     # if  multiple results are to be fetched
     elif to_fetch == 'fetchall()':
-        results = ps_cursor.fetchall()
+        results = postgres_connection_obj.cursor.fetchall()
         
-    ps_cursor.close()
-    db_conn.commit()
+    # postgres_connection_obj.close_cursor()
+    postgres_connection_obj.commit_connection()
+    # db_conn.commit()
     return results
 
 def execute_commit_sql_statement(sql_statement, db_conn):
