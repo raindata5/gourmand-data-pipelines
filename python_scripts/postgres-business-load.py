@@ -35,6 +35,7 @@ if __name__ == "__main__":
 
     try:
         ps.start_connection()
+        ps.start_cursor()
         execute_commit_sql_statement2(sql_statement=truncate_query, postgres_connection_obj=ps)
         print('table truncated')
         execute_commit_sql_statement2(sql_statement=sql, postgres_connection_obj=ps)

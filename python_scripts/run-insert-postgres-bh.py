@@ -7,6 +7,7 @@ if __name__ == "__main__":
     ps = PostgresConnection()
     try:
         ps.start_connection()
+        ps.start_cursor()
         sql_file = open('sql_scripts/insert-postgres-bh.sql','r')
         execute_commit_sql_statement2(sql_statement=sql_file.read(), postgres_connection_obj=ps)
         ps.close_cursor()
