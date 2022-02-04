@@ -326,8 +326,8 @@ county_path="&for=county:*", state_path="&in=state:*", variables_map_path="/vari
         return df_data
 
 
-conn_obj: Optional[DbConn] = None
+# conn_obj: Optional[DbConn] = None
 
-def start_database_conn_obj():
-    global conn_obj
-    conn_obj = DbConn()
+# def start_database_conn_obj():
+#     global conn_obj
+#     conn_obj = DbConn()
