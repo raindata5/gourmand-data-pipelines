@@ -15,7 +15,8 @@ from typing import Set
 
 
 class PostgresConnection():
-    """ This is an object for managing the connection to the Postgres database"""
+    """ This is an object for managing the connection to the Postgres database
+        at the very least it expects to have the file `pipeline.conf` in the same directory as the code"""
     parser = configparser.ConfigParser()
     if "pipeline.conf" in os.listdir():
         parser.read('pipeline.conf')
@@ -32,6 +33,9 @@ class PostgresConnection():
         self.port: str = self.parser.get("postgres_ubuntu_db", "port")
     
     def start_connection(self) -> None:
+        """This code is used to intialize a connection with a Postgres database using the connection parameters
+            previously read from a .conf file upon instantiation of the object. The psycopg2.connection 
+            will be stored as an attribute on the class"""
         try:
             ps_conn = psycopg2.connect(dbname=self.dbname, user=self.user, password=self.password, host=self.host, port=self.port)
         except (psycopg2.OperationalError, psycopg2.InternalError):

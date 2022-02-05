@@ -21,8 +21,12 @@ With that setup data from yelp will be pulled daily and inserted into this sourc
 From there the data will be extracted to an **S3 Bucket** which will serve as our de-facto data lake.\
 Subsequently the data will be pulled from the **S3 Bucket** and ingested into some staging tables in Google Big Query ,that will serve as our data warehouse, where we'll make use of **dbt** to denormalize the data into a Snowflake Model.\
 Once this is done some simple data validation checks will be carried out and we'll log these results and route them back to our **Postgres** db to create some metrics with them and send notifications via flask in the event of any issues.\
-To orchestrate our recurring data workflow we'll use **Apache Airflow** with a **Postgres** Instance that is ran in a **Docker** container.\
-Also using the **FastAPI** framework we'll be able to create an API on top of our source database with **Redis** to cache certain responses.\
+To orchestrate our recurring data workflow we'll use **Apache Airflow** with a **Postgres** Instance that is ran in a **Docker** container.
+> Note: Now the code has been updated to run Apache Airflow completely in Docker with the CeleryExecutor 😀. So now this provides more scalibility if we plan on working with a multi-node setup. I just have yet to update the directions in this code.
+
+Also using the **FastAPI** framework we'll be able to create an API on top of our source database with **Redis** to cache certain responses.
+> Note: The our API has been fully dockerized and integrated as such with the CI/CD pipeline.
+
 There are also other plans to extend this project which can be seen in the following data architecture diagram.
 
 <!-- [link](#sample)
