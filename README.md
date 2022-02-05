@@ -50,6 +50,10 @@ A simple dashboard showing the benefits of creating a business that caters to pr
 2. The fact that a business is a low-cost has little to no impact on it's business rating \
 The majority of our businesses are in the U.S. and low-cost. This puts in perspective a statement I heard a french guy say "On dit qu'ici (c'est-a-dire la france) on vit pour manger mais eux (c'est-a-dire les Amèricains) ils mangent pour vivre" 😅.
 
+![A groupplot showing the different rating probabilities controlled on the payment level (cost) ](images/cond_prob_states.png)
+
+![A horizontal bar graph showing which businesses had the highest absolute review changes over time](images/state_diffs.png)
+
 
 ## Main Concepts
  - [Data Pipeline](https://www.snowflake.com/guides/data-pipeline#:~:text=A%20data%20pipeline%20is%20a%20means%20of%20moving,steps%20involved%20in%20aggregating%2C%20organizing%2C%20and%20moving%20data.)
