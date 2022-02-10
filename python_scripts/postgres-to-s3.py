@@ -139,7 +139,8 @@ for table in table_results:
                             businessid,\
                             transactionid,\
                             lasteditedwhen,\
-                            concat(businessid, \'-\', transactionid) as SnapshotCompKey from {table[0]}'
+                            concat(businessid, \'-\', transactionid) as SnapshotCompKey,\
+                            validto from {table[0]}'
 
             results = execute_commit_sql_statement2(sql_statement=btb_query, postgres_connection_obj=ps_obj, to_fetch='fetchall()')
             # ps_cursor.execute(btb_query)
@@ -154,7 +155,8 @@ for table in table_results:
                             businessid,\
                             categoryid,\
                             lasteditedwhen,\
-                            concat(businessid, \'-\', categoryid) as SnapshotCompKey from {table[0]}'
+                            concat(businessid, \'-\', categoryid) as SnapshotCompKey,\
+                            validto from {table[0]}'
 
             results = execute_commit_sql_statement2(sql_statement=bcb_query, postgres_connection_obj=ps_obj, to_fetch='fetchall()')
             # ps_cursor.execute(bcb_query)

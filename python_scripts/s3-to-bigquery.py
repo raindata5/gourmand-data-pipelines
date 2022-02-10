@@ -57,10 +57,14 @@ KEY_PATH = "gourmanddwh-f75384f95e86.json"
 CREDS = service_account.Credentials.from_service_account_file(KEY_PATH)
 client = bigquery.Client(credentials=CREDS, project=CREDS.project_id)
 
+
+# ds = client.list_tables('Snapshots')
+# ds2 = [table.table_id for table in ds]
+
 # table_logs = []
-# for table in table_results:
-#     sql_query = f'select * from gourmanddwh.public2.{table[2]}'
-#     new_table_id = f'gourmanddwh.public3.{table[2]}'
+# for table in ds2:
+#     sql_query = f'select * from gourmanddwh.Snapshots.{table}'
+#     new_table_id = f'gourmanddwh.Snapshots2.{table}'
 #     # *** -------> review
 #     # allow jagged rows should fix the issue
 #     job_config = bigquery.QueryJobConfig(destination=new_table_id)
