@@ -58,8 +58,24 @@ CREDS = service_account.Credentials.from_service_account_file(KEY_PATH)
 client = bigquery.Client(credentials=CREDS, project=CREDS.project_id)
 
 
-# ds = client.list_tables('Snapshots')
-# ds2 = [table.table_id for table in ds]
+ds = client.list_tables('g_production')
+ds2 = [table.table_id for table in ds]
+ok = [client.get_table(f'gourmanddwh.g_production.{table}') for table in ds2] 
+
+
+# table_logs = []
+# for table in ds2:
+#     # sql_query = f'select * except(validto) from gourmanddwh.Snapshots.{table}'
+#     # new_table_id = f'gourmanddwh.Snapshots.{table}1'
+#     sql_query = f'select * from gourmanddwh.Snapshots.{table}1'
+#     new_table_id = f'gourmanddwh.Snapshots.{table}'
+#     # *** -------> review
+#     # allow jagged rows should fix the issue
+#     job_config = bigquery.QueryJobConfig(destination=new_table_id)
+#     query_job = client.query(sql_query, job_config=job_config)
+#     table_logs.append([query_job.result(), table[2], new_table_id])
+
+#     print("Query results loaded to the following table: {}".format(new_table_id))
 
 # table_logs = []
 # for table in ds2:

@@ -47,6 +47,28 @@ data2 = [row for row in data]
 
 event_date_res = data2[0][0]
 
+g_prod_tables_iter = client.list_tables('g_production')
+g_prod_table_ids = [table.table_id for table in g_prod_tables_iter]
+g_prod_table_schemas  = [(f'gourmanddwh.g_production.{table}', client.get_table(f'gourmanddwh.g_production.{table}').schema, ) for table in g_prod_table_ids]
+
+valid_from_tables = []
+for table, schema in g_prod_table_schemas:
+
+    for field in schema:
+        if field.name.lower() == 'validfrom':
+            valid_from_tables.append(table)
+            break
+
+
+table_valid_from_results = {}
+for table in valid_from_tables:
+    valid_from_query = f"select coalesce(max(ValidFrom), '1900-01-01') from {table}"
+    row_iter = client.query(valid_from_query).result()
+    rows = [row for row in row_iter]
+    max_dt_obj = rows[0][0]
+    pg_table = re.sub('dim', '', table.split('.')[-1].lower())
+    value = {'bq_table': table, 'pg_table': pg_table, 'filter': max_dt_obj}
+    table_valid_from_results[pg_table] = value
 
 
 #[]
@@ -54,16 +76,14 @@ event_date_res = data2[0][0]
 ps_obj = PostgresConnection()
 ps_obj.start_connection()
 
-# ps_conn = db_conn()
+
 
 ps_obj.start_cursor()
-# ps_cursor = ps_conn.cursor()
+
 
 sql_file = open('sql_scripts/all-oltp-tables-postgres.sql','r')
 table_results = execute_commit_sql_statement2(sql_statement=sql_file.read(), postgres_connection_obj=ps_obj, to_fetch='fetchall()')
 
-# ps_cursor.execute(sql_file.read())
-# table_results = ps_cursor.fetchall()
 
 cnt_results_tbl = []
 for table in table_results:
@@ -84,14 +104,12 @@ for table in table_results:
             final_BH_QUERY = BH_QUERY + " WHERE CloseDate >= %s"
             inc_select_rows_query = select_cnt_query + " WHERE CloseDate >= %s"
             cnt_res = execute_commit_sql_statement2(sql_statement=inc_select_rows_query, postgres_connection_obj=ps_obj, arguments=(fbh_date_res,), to_fetch='fetchone()')
-            # ps_cursor.execute(inc_select_rows_query, (fbh_date_res,))
-            # cnt_res = ps_cursor.fetchone()[0]
+
             ix = (cnt_res,table[2],)
             cnt_results_tbl.append(ix)
             # results not defined
             results = execute_commit_sql_statement2(sql_statement=final_BH_QUERY, postgres_connection_obj=ps_obj, arguments=(fbh_date_res,), to_fetch='fetchall()')
-            # ps_cursor.execute(final_BH_QUERY, (fbh_date_res,))
-            # results = ps_cursor.fetchall()
+
 
         elif table[2] == "countygrowth":
             CG_QUERY = f'select \
@@ -104,35 +122,28 @@ for table in table_results:
             inc_select_rows_query = select_cnt_query + " WHERE LastEditedWhen > %s"
 
             cnt_res = execute_commit_sql_statement2(sql_statement=inc_select_rows_query, postgres_connection_obj=ps_obj, arguments=(cg_date_res,), to_fetch='fetchone()')
-            # ps_cursor.execute(inc_select_rows_query, (cg_date_res,))
-            # cnt_res = ps_cursor.fetchone()[0]
+
             ix = (cnt_res,table[2],)
             cnt_results_tbl.append(ix)
 
             results = execute_commit_sql_statement2(sql_statement=final_CG_QUERY, postgres_connection_obj=ps_obj, arguments=(cg_date_res,), to_fetch='fetchall()')
-            # ps_cursor.execute(final_CG_QUERY, (cg_date_res,))
-            # results = ps_cursor.fetchall()
+
 
         elif table[2] == "event":
             final_event_query = select_rows_query + " WHERE LastEditedWhen > %s"
             inc_select_rows_query = select_cnt_query + " WHERE LastEditedWhen > %s"
 
             cnt_res = execute_commit_sql_statement2(sql_statement=inc_select_rows_query, postgres_connection_obj=ps_obj, arguments=(event_date_res,), to_fetch='fetchone()')
-            # ps_cursor.execute(inc_select_rows_query, (event_date_res,))
-            # cnt_res = ps_cursor.fetchone()[0]
+
             ix = (cnt_res,table[2],)
             cnt_results_tbl.append(ix)
 
             results = execute_commit_sql_statement2(sql_statement=final_event_query, postgres_connection_obj=ps_obj, arguments=(event_date_res,), to_fetch='fetchall()')
-            # ps_cursor.execute(final_event_query, (event_date_res,))
-            # results = ps_cursor.fetchall()
 
         elif table[2] == 'businesstransactionbridge':
 
-            cnt_res = execute_commit_sql_statement2(sql_statement=select_cnt_query, postgres_connection_obj=ps_obj, to_fetch='fetchone()')
+            cnt_res = execute_commit_sql_statement2(sql_statement=select_cnt_query + " WHERE LastEditedWhen > %s", postgres_connection_obj=ps_obj, arguments=(table_valid_from_results[table[2]]['filter'],), to_fetch='fetchone()')
 
-            # ps_cursor.execute(select_cnt_query)
-            # cnt_res = ps_cursor.fetchone()[0]
             ix = (cnt_res,table[2],)
             cnt_results_tbl.append(ix)
             btb_query = f'select \
@@ -141,14 +152,12 @@ for table in table_results:
                             lasteditedwhen,\
                             concat(businessid, \'-\', transactionid) as SnapshotCompKey,\
                             validto from {table[0]}'
+            final_btb_query = btb_query + " WHERE LastEditedWhen > %s"
+            results = execute_commit_sql_statement2(sql_statement=final_btb_query, postgres_connection_obj=ps_obj, arguments=(table_valid_from_results[table[2]]['filter'],), to_fetch='fetchall()')
 
-            results = execute_commit_sql_statement2(sql_statement=btb_query, postgres_connection_obj=ps_obj, to_fetch='fetchall()')
-            # ps_cursor.execute(btb_query)
-            # results = ps_cursor.fetchall()
         elif table[2] == 'businesscategorybridge':
-            cnt_res = execute_commit_sql_statement2(sql_statement=select_cnt_query, postgres_connection_obj=ps_obj, to_fetch='fetchone()')
-            # ps_cursor.execute(select_cnt_query)
-            # cnt_res = ps_cursor.fetchone()[0]
+            cnt_res = execute_commit_sql_statement2(sql_statement=select_cnt_query + " WHERE LastEditedWhen > %s", postgres_connection_obj=ps_obj, arguments=(table_valid_from_results[table[2]]['filter'],), to_fetch='fetchone()')
+
             ix = (cnt_res,table[2],)
             cnt_results_tbl.append(ix)
             bcb_query = f'select \
@@ -157,21 +166,23 @@ for table in table_results:
                             lasteditedwhen,\
                             concat(businessid, \'-\', categoryid) as SnapshotCompKey,\
                             validto from {table[0]}'
+            final_bcb_query = bcb_query + " WHERE LastEditedWhen > %s"
+            results = execute_commit_sql_statement2(sql_statement=final_bcb_query, postgres_connection_obj=ps_obj, arguments=(table_valid_from_results[table[2]]['filter'],), to_fetch='fetchall()')
 
-            results = execute_commit_sql_statement2(sql_statement=bcb_query, postgres_connection_obj=ps_obj, to_fetch='fetchall()')
-            # ps_cursor.execute(bcb_query)
-            # results = ps_cursor.fetchall()
+        elif table[2] in table_valid_from_results.keys():
+            cnt_res = execute_commit_sql_statement2(sql_statement=select_cnt_query + (" WHERE insertedat > %s" if table[2] == 'review' else " WHERE LastEditedWhen > %s"), postgres_connection_obj=ps_obj, arguments=(table_valid_from_results[table[2]]['filter'],), to_fetch='fetchone()')
+            ix = (cnt_res,table[2],)
+            cnt_results_tbl.append(ix)
+            results = execute_commit_sql_statement2(sql_statement=select_rows_query + (" WHERE insertedat > %s" if table[2] == 'review' else " WHERE LastEditedWhen > %s"), postgres_connection_obj=ps_obj, arguments=(table_valid_from_results[table[2]]['filter'],), to_fetch='fetchall()')
+
         else:
             cnt_res = execute_commit_sql_statement2(sql_statement=select_cnt_query, postgres_connection_obj=ps_obj, to_fetch='fetchone()')
-            # ps_cursor.execute(select_cnt_query)
-            # cnt_res = ps_cursor.fetchone()[0]
             ix = (cnt_res,table[2],)
             cnt_results_tbl.append(ix)
 
             results = execute_commit_sql_statement2(sql_statement=select_rows_query, postgres_connection_obj=ps_obj, to_fetch='fetchall()')
-            # ps_cursor.execute(select_rows_query)
-            # results = ps_cursor.fetchall()
-    except Exception as e:
+
+    except ValueError as e:
         print(e)
         print(table)
         print(type(results))
@@ -179,8 +190,7 @@ for table in table_results:
     with open(f'{raw_directory}/{table[1]}', 'w', encoding='UTF-8') as fp:
         csv_w = csv.writer(fp, delimiter='|', quotechar="'")
         csv_w.writerows(results)
-    # will rather run at the top
-    # ps_conn.commit()
+
 with open(f'{raw_directory}/tbl_cnt_results.csv', 'w', encoding='UTF-8') as fp:
     csv_w = csv.writer(fp, delimiter='|', quotechar="'")
     csv_w.writerows(cnt_results_tbl)
@@ -208,5 +218,3 @@ s3_client.upload_file(f'{raw_directory}/tbl_cnt_results.csv', bucket_name, f'{ra
 
 ps_obj.close_cursor()
 ps_obj.close_connection()
-# ps_cursor.close()
-# ps_conn.close()
