@@ -42,6 +42,13 @@ class PostgresConnection():
             print('Database unreachable on first attempt going to try a second time')
             ps_conn = psycopg2.connect(dbname=self.dbname, user=self.user, password=self.password, host=self.host, port=self.port)
         self.conn = ps_conn
+    # @property
+    # def conn(self):
+    #     if self.conn and self.conn.closed == 0:
+    #         return self.conn
+    #     elif self.conn and self.conn.closed != 0:
+    #         self.start_connection()
+    #         return self.conn
 
     def start_cursor(self) -> None:
         if self.conn:
