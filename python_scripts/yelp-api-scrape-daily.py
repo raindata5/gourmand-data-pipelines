@@ -16,9 +16,13 @@ if __name__ == "__main__":
 
     elif (len(sys.argv) == 2) and (sys.argv[1] == 'test') and (sys.argv[-1] == sys.argv[1]):
         print('example usage: python python_scripts/yelp-api-scrape-daily.py test 10')
+        exit(0)
     # if test is not specified then we will pull the maximum amount of records
     elif (len(sys.argv) == 1): 
         test_var=None
+    else:
+        print('example usage: python python_scripts/yelp-api-scrape-daily.py test 10')
+        exit(0)
 
         
     directory = create_data_directory(base_dir='local_raw_data')

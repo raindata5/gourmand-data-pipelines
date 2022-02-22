@@ -14,7 +14,7 @@
 ---
 
 ## Overview
-This project looks to leverage multiple tools to create a data architecture that could help serve as the backend for a business and even the frontend (more on this in due time). While the initial focus was simply ony creating an data pipeline to move the data from one source <em>x</em> to a data warehouse <em>y</em> the project has evolved to include a number of supplementary technologies/features partially due to problems that arose out of the blue. Fortunately while there may not always be meer solutions to everything there's always a nice trade-off i.e. compromise.\
+This project looks to leverage multiple tools to create a data architecture that could help serve as the backend for a business and even the frontend (more on this in due time). While the initial focus was simply only creating a data pipeline to move the data from one source <em>x</em> to a data warehouse <em>y</em> to run some analyses, the project has evolved to include a number of supplementary technologies/features partially due to problems that arose out of the blue. Fortunately while there may not always be meer solutions to everything there's always a nice trade-off i.e. compromise.\
 To begin we'll extract data from 3 sources ,namely, the **Census API** , a [web page]("https://www.50states.com/abbreviations.htm") via webscrape, and the **Yelp API** and push this to a **Postgres** database.\
 Initially this will be used to simulate a source db using **dbt** to normalize the data as would be expected in most OLTP dbs.\
 With that setup data from yelp will be pulled daily and inserted into this source db.\
@@ -27,6 +27,7 @@ To orchestrate our recurring data workflow we'll use **Apache Airflow** with a *
 Also using the **FastAPI** framework we'll be able to create an API on top of our source database with **Redis** to cache certain responses.
 > Note: The our API has been fully dockerized and integrated as such with the CI/CD pipeline.
 
+Since our goal is ultimately run some analyses we will then look to carry this out.\
 There are also other plans to extend this project which can be seen in the following data architecture diagram.
 
 <!-- [link](#sample)
@@ -39,6 +40,10 @@ There are also other plans to extend this project which can be seen in the follo
 
 
 ## Data Visualization
+
+![A dashboard of some of the business trends one can observe](images/btd_tableau.png "btb-dashboard")
+This dashboard you can observe [here](https://public.tableau.com/app/profile/ronald2610/viz/BusinessTrendsDashboard_16454901901320/DistinctBusinessCounts?publish=yes).
+It serves to show some of the trends for certain time periods.
 
 ![A heatmap of the included businesses](images/heatmap_of_locations.png "Heatmap")
 Above you can see the businesses that we're tracking which will be crucial to take into account upon evaluating external validity during any analysis.
@@ -91,7 +96,7 @@ For the time being here is the totality of the repositories that will be referen
 - [DWH Modeling](https://github.com/raindata5/gourmand-dwh)
 - [API Creation](https://github.com/raindata5/gourmand-api)
 - [Data Pipeline](https://github.com/raindata5/gourmand-data-pipelines)
-- [Data Analysis](https://github.com/raindata5/data-analysis-business-economics-policy)
+- [Data Analysis](https://github.com/raindata5/data-analysis-business-economics-policy/tree/master/gourmand_data_analysis)
 - [Data Orchestration with Apache Airflow](https://github.com/raindata5/pipeline-scripts)
 
 1. Setting up the OLTP database \
@@ -151,7 +156,7 @@ Initially I was planning on creating this db using Microsoft SQL Server but fort
 4. First Data Models in BQ\
 Here we are going to want out data model to look like the following 
 
-    ![](images/olap_db_model.png "Normalized Model")
+    ![](images/olap_db_model.png "Denomalized Model")
 
     >Note: This is a regular denormalized data model and considering the options we have when it comes to storage we can always create views of more wide tables on top of these tables to facilitate analytical querying.
     
@@ -164,7 +169,9 @@ Here we are going to want out data model to look like the following
     `dbt snapshot`\
     `dbt run`\
     `dbt test --store-failures > dbt-test-file.txt`\
-    Now you should have a fully denormalized dwh 😀
+    Now you should have a fully denormalized dwh 😀. It should look like the following in the dbt lineage graph
+
+    ![](images/dbt_lineage2.png "Denomalized dbt lineage graph")
 5. Setting Up Apache Airflow w/ docker
     1. To begin we'll run `git clone https://github.com/raindata5/pipeline-scripts.git `
     2. Having already set up docker and docker-compose and being going into this directory you can now run `docker-compose up -d` to start the database that Airflow will use
